@@ -21,6 +21,9 @@
         <!-- 业务功能插件 -->
         <module>snowy-plugin-biz</module>
 
+        <!-- 事故业务功能插件 -->
+        <module>snowy-plugin-sg</module>
+
          <!-- C端功能插件 -->
         <module>snowy-plugin-client</module>
 
