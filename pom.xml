@@ -112,6 +112,13 @@
                 <version>${snowy.version}</version>
             </dependency>
 
+            <!-- snowy-plugin-sg -->
+            <dependency>
+                <groupId>vip.xiaonuo</groupId>
+                <artifactId>snowy-plugin-sg</artifactId>
+                <version>${snowy.version}</version>
+            </dependency>
+
             <!-- snowy-plugin-client -->
             <dependency>
                 <groupId>vip.xiaonuo</groupId>
