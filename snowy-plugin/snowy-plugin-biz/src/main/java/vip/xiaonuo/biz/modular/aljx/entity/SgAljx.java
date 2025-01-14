@@ -36,12 +36,16 @@ public class SgAljx {
     private String aljxId;
 
     /** 事故类型(例：火灾、地震、洪涝) */
-    @Schema(description = "事故类型(例：火灾、地震、洪涝)")
+    @Schema(description = "案例类型(例：火灾、地震、洪涝)")
     private String sglx;
 
     /** 事故分类(例：地方事故) */
-    @Schema(description = "事故分类(例：地方事故)")
+    @Schema(description = "事故分类(例：地方事故、WJ事故、MJ事故)")
     private String sgfl;
+
+    /** 事故地点 */
+    @Schema(description = "事故地点")
+    private String sgdd;
 
     /** 事故单位 */
     @Schema(description = "事故单位")
@@ -51,8 +55,8 @@ public class SgAljx {
     @Schema(description = "事故等级")
     private String sgdj;
 
-    /** 事故代码 */
-    @Schema(description = "事故代码")
+    /** 事故代码/事故编码 */
+    @Schema(description = "事故代码/事故编码")
     private String sgdm;
 
     /** 事故发生时间 */
@@ -62,6 +66,18 @@ public class SgAljx {
     /** 事故标签 */
     @Schema(description = "事故标签")
     private String sgbq;
+
+    /** 事故报告文件UUID */
+    @Schema(description = "事故报告文件UUID")
+    private String sgbgUuid;
+
+    /** 事故报告文件名称 */
+    @Schema(description = "事故报告文件名称")
+    private String sgbgName;
+
+    /** 事故致因分析 */
+    @Schema(description = "事故致因分析")
+    private String sgzyfx;
 
     /** 排序 */
     @Schema(description = "排序")
