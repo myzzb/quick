@@ -32,7 +32,7 @@ import java.util.Date;
 public class SgAljxAddParam {
 
     /** 事故类型(例：火灾、地震、洪涝) */
-    @Schema(description = "事故类型(例：火灾、地震、洪涝)")
+    @Schema(description = "事故类型(例：火灾、地震、洪涝)", requiredMode = Schema.RequiredMode.REQUIRED)
     private String sglx;
 
     /** 事故分类(例：地方事故) */
@@ -40,12 +40,16 @@ public class SgAljxAddParam {
     @NotBlank(message = "sgfl不能为空")
     private String sgfl;
 
+    /** 事故名称 */
+    @Schema(description = "事故名称", requiredMode = Schema.RequiredMode.REQUIRED)
+    private String sgmc;
+
     /** 事故地点 */
-    @Schema(description = "事故地点")
+    @Schema(description = "事故地点", requiredMode = Schema.RequiredMode.REQUIRED)
     private String sgdd;
 
     /** 事故单位 */
-    @Schema(description = "事故单位")
+    @Schema(description = "事故单位", requiredMode = Schema.RequiredMode.REQUIRED)
     private String sgdw;
 
     /** 事故等级 */

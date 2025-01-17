@@ -10,7 +10,7 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package vip.xiaonuo.biz.modular.aljx.param;
+package vip.xiaonuo.biz.modular.alsglc.param;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -22,69 +22,38 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 案例教学编辑参数
+ * 案例事故流程添加参数
  *
  * @author byc
- * @date  2025/01/09 17:49
+ * @date  2025/01/15 18:31
  **/
 @Getter
 @Setter
-public class SgAljxEditParam {
+public class AlsglcAddParam {
 
     /** 案例教学ID */
     @Schema(description = "案例教学ID", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "aljxId不能为空")
     private String aljxId;
 
-    /** 事故类型(例：火灾、地震、洪涝) */
-    @Schema(description = "事故类型(例：火灾、地震、洪涝)")
-    private String sglx;
-
-    /** 事故分类(例：地方事故) */
-    @Schema(description = "事故分类(例：地方事故)", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "sgfl不能为空")
-    private String sgfl;
-
-    /** 事故名称 */
-    @Schema(description = "事故名称")
+    /** 案例教学事故名称 */
+    @Schema(description = "案例教学事故名称", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "sgmc不能为空")
     private String sgmc;
 
-    /** 事故地点 */
-    @Schema(description = "事故地点")
-    private String sgdd;
+    /** 流程名称 */
+    @Schema(description = "流程名称", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank(message = "lcmc不能为空")
+    private String lcmc;
 
-    /** 事故单位 */
-    @Schema(description = "事故单位")
-    private String sgdw;
-
-    /** 事故等级 */
-    @Schema(description = "事故等级", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "sgdj不能为空")
-    private String sgdj;
-
-    /** 事故代码 */
-    @Schema(description = "事故代码")
-    private String sgdm;
-
-    /** 事故发生时间 */
-    @Schema(description = "事故发生时间")
-    private String sgfssj;
-
-    /** 事故标签 */
-    @Schema(description = "事故标签")
-    private String sgbq;
-
-    /** 事故报告 */
-    @Schema(description = "事故报告")
-    private String sgbg;
-
-    /** 事故致因分析 */
-    @Schema(description = "事故致因分析")
-    private String sgzyfx;
+    /** 流程内容 */
+    @Schema(description = "流程内容", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank(message = "lcnr不能为空")
+    private String lcnr;
 
     /** 排序 */
-    @Schema(description = "排序")
+    @Schema(description = "排序", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "sortCode不能为空")
     private Integer sortCode;
 
     /** 备注 */
