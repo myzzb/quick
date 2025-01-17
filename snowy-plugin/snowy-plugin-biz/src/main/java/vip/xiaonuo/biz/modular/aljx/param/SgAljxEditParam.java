@@ -45,6 +45,10 @@ public class SgAljxEditParam {
     @NotBlank(message = "sgfl不能为空")
     private String sgfl;
 
+    /** 事故地点 */
+    @Schema(description = "事故地点")
+    private String sgdd;
+
     /** 事故单位 */
     @Schema(description = "事故单位")
     private String sgdw;
@@ -65,6 +69,14 @@ public class SgAljxEditParam {
     /** 事故标签 */
     @Schema(description = "事故标签")
     private String sgbq;
+
+    /** 事故报告 */
+    @Schema(description = "事故报告")
+    private String sgbg;
+
+    /** 事故致因分析 */
+    @Schema(description = "事故致因分析")
+    private String sgzyfx;
 
     /** 排序 */
     @Schema(description = "排序")
