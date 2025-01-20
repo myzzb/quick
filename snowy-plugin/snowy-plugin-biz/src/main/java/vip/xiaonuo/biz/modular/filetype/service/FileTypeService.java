@@ -12,6 +12,7 @@
  */
 package vip.xiaonuo.biz.modular.filetype.service;
 
+import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import vip.xiaonuo.biz.modular.filetype.entity.FileType;
@@ -77,4 +78,12 @@ public interface FileTypeService extends IService<FileType> {
      * @date  2025/01/17 15:04
      **/
     FileType queryEntity(String id);
+
+    /**
+    * @description 获取文件类型树选择器
+    * @return java.util.List<cn.hutool.core.lang.tree.Tree<java.lang.String>>
+    * @author zzb
+    * @date 2025/1/19 18:42
+    **/
+    List<Tree<String>> fileTypeTreeSelector();
 }

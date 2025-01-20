@@ -16,6 +16,8 @@ import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import vip.xiaonuo.common.pojo.CommonEntity;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -28,7 +30,7 @@ import java.util.Date;
 @Getter
 @Setter
 @TableName("sg_file_type")
-public class FileType {
+public class FileType extends CommonEntity {
 
     /** ID */
     @TableId

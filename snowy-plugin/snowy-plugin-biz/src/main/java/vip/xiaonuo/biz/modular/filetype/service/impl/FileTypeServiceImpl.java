@@ -14,11 +14,18 @@ package vip.xiaonuo.biz.modular.filetype.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollStreamUtil;
+import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeNode;
+import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vip.xiaonuo.common.enums.CommonSortOrderEnum;
@@ -33,6 +40,8 @@ import vip.xiaonuo.biz.modular.filetype.param.FileTypePageParam;
 import vip.xiaonuo.biz.modular.filetype.service.FileTypeService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 文件类型Service接口实现类
@@ -40,6 +49,7 @@ import java.util.List;
  * @author zzb
  * @date  2025/01/17 15:04
  **/
+@Slf4j
 @Service
 public class FileTypeServiceImpl extends ServiceImpl<FileTypeMapper, FileType> implements FileTypeService {
 
@@ -93,5 +103,23 @@ public class FileTypeServiceImpl extends ServiceImpl<FileTypeMapper, FileType> i
             throw new CommonException("文件类型不存在，id值为：{}", id);
         }
         return fileType;
+    }
+
+    @Override
+    public List<Tree<String>> fileTypeTreeSelector() {
+        log.info("fileTypeTreeSelector is begin, no param ");
+        LambdaQueryWrapper<FileType> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        List<FileType> resourceList = this.list(lambdaQueryWrapper);
+
+
+        List<TreeNode<String>> treeNodeList = resourceList.stream().map(FileType ->
+                        new TreeNode<>(FileType.getId(), FileType.getPid(),
+                                FileType.getName(), FileType.getSortCode()).setExtra(JSONUtil.parseObj(FileType)))
+                .collect(Collectors.toList());
+        return TreeUtil.build(treeNodeList, "0");
+
+        List<Tree<String>> build = TreeUtil.build(treeNodeList, "0");
+        log.info("fileTypeTreeSelector is end, result is {}", JSONObject.toJSONString(build));
+        return build;
     }
 }
