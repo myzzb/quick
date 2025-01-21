@@ -35,6 +35,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import vip.xiaonuo.biz.modular.file.enums.SgFileEngineTypeEnum;
 import vip.xiaonuo.biz.modular.file.util.SgFileLocalUtil;
+import vip.xiaonuo.biz.modular.filetype.entity.FileType;
+import vip.xiaonuo.biz.modular.filetype.mapper.FileTypeMapper;
 import vip.xiaonuo.common.enums.CommonSortOrderEnum;
 import vip.xiaonuo.common.exception.CommonException;
 import vip.xiaonuo.common.page.CommonPageRequest;
@@ -68,6 +70,9 @@ public class SgFileServiceImpl extends ServiceImpl<SgFileMapper, SgFile> impleme
 
     @Resource
     private CommonProperties commonProperties;
+
+    @Resource
+    private FileTypeMapper fileTypeMapper;
 
     @Override
     public void download(SgFileIdParam sgFileIdParam, HttpServletResponse response) throws IOException {
@@ -250,6 +255,7 @@ public class SgFileServiceImpl extends ServiceImpl<SgFileMapper, SgFile> impleme
 
     @Override
     public Page<SgFile> page(SgFilePageParam sgFilePageParam) {
+        log.info("select SgFile page is begin, param is {}", JSONObject.toJSONString(sgFilePageParam));
         QueryWrapper<SgFile> queryWrapper = new QueryWrapper<SgFile>().checkSqlInjection();
         if(ObjectUtil.isNotEmpty(sgFilePageParam.getName())) {
             queryWrapper.lambda().like(SgFile::getName, sgFilePageParam.getName());
@@ -261,7 +267,15 @@ public class SgFileServiceImpl extends ServiceImpl<SgFileMapper, SgFile> impleme
         } else {
             queryWrapper.lambda().orderByAsc(SgFile::getId);
         }
-        return this.page(CommonPageRequest.defaultPage(), queryWrapper);
+        Page<SgFile> page = this.page(CommonPageRequest.defaultPage(), queryWrapper);
+        page.getRecords().forEach(item -> {
+            FileType fileType = fileTypeMapper.selectById(item.getFileTypeId());
+            if (ObjectUtil.isNotEmpty(fileType)) {
+                item.setFileTypeName(fileType.getName());
+            }
+        });
+        log.info("select SgFile page is end, result is {}", JSONObject.toJSONString(page));
+        return page;
     }
 
     @Transactional(rollbackFor = Exception.class)

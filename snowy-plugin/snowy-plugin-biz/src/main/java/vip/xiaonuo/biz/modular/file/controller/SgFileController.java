@@ -14,6 +14,8 @@ package vip.xiaonuo.biz.modular.file.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
@@ -61,6 +63,10 @@ public class SgFileController {
     @Operation(summary = "上传本地文件返回url")
     @CommonLog("上传本地文件返回url")
     @PostMapping("/biz/file/uploadLocalReturnUrl")
+    @ApiImplicitParams({
+            @ApiImplicitParam(dataType = "File", name = "file", value = "上传的文件", required = true),
+            @ApiImplicitParam(dataType = "string", name = "fileTypeId", value = "文件资源类型ID", required = true)
+    })
     public CommonResult<String> uploadLocalReturnUrl(@RequestPart("file") MultipartFile file, String fileTypeId) {
         return CommonResult.data(sgFileService.uploadReturnUrl(SgFileEngineTypeEnum.LOCAL.getValue(), file, fileTypeId));
     }

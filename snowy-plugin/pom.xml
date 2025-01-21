@@ -39,4 +39,5 @@
         <!-- 系统功能插件 -->
         <module>snowy-plugin-sys</module>
     </modules>
+
 </project>
