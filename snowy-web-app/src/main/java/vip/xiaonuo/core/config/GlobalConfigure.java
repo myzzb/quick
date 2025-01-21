@@ -136,6 +136,8 @@ public class GlobalConfigure implements WebMvcConfigurer {
 
             /* 文件下载 */
             "/dev/file/download",
+            /* sg文件下载 */
+            "/sg/file/download",
 
             /* 用户个人中心相关 */
             "/sys/userCenter/getPicCaptcha",

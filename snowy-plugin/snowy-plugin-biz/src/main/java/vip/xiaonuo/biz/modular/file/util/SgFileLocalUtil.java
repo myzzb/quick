@@ -1,16 +1,4 @@
-/*
- * Copyright [2022] [https://www.xiaonuo.vip]
- *
- * Snowy采用APACHE LICENSE 2.0开源协议，您在使用过程中，需要注意以下几点：
- *
- * 1.请不要删除和修改根目录下的LICENSE文件。
- * 2.请不要删除和修改Snowy源码头部的版权声明。
- * 3.本项目代码可免费商业使用，商业使用请保留源码和相关描述文件的项目出处，作者声明等。
- * 4.分发源码时候，请注明软件出处 https://www.xiaonuo.vip
- * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
- * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
- */
-package vip.xiaonuo.dev.modular.file.util;
+package vip.xiaonuo.biz.modular.file.util;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IORuntimeException;
@@ -21,9 +9,9 @@ import cn.hutool.json.JSONUtil;
 import cn.hutool.system.SystemUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
+import vip.xiaonuo.biz.modular.file.enums.SgFileBucketAuthEnum;
 import vip.xiaonuo.common.exception.CommonException;
 import vip.xiaonuo.dev.api.DevConfigApi;
-import vip.xiaonuo.dev.modular.file.enums.DevFileBucketAuthEnum;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -31,13 +19,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * 本地文件工具类
- *
- * @author xuyuxiang
- * @date 2022/1/2 18:13
+ 1. @description:  本地文件工具类
+ 2. @author: zzb
+ 3. @time: 2025/1/20 
  */
 @Slf4j
-public class DevFileLocalUtil {
+public class SgFileLocalUtil {
 
     private static JSONObject client;
 
@@ -130,11 +117,11 @@ public class DevFileLocalUtil {
      * 预定义策略如公有读、公有读写、私有读
      *
      * @param bucketName 桶名称
-     * @param devFileBucketAuthEnum 存储桶权限
+     * @param sgFileBucketAuthEnum 存储桶权限
      * @author xuyuxiang
      * @date 2022/1/5 23:24
      */
-    public static void setBucketAcl(String bucketName, DevFileBucketAuthEnum devFileBucketAuthEnum) {
+    public static void setBucketAcl(String bucketName, SgFileBucketAuthEnum sgFileBucketAuthEnum) {
         // 无需
     }
 
@@ -218,6 +205,10 @@ public class DevFileLocalUtil {
         System.out.println(a);
         String path = getUploadFileFolder() + FileUtil.FILE_SEPARATOR + bucketName + FileUtil.FILE_SEPARATOR + key;
         System.out.println(path);
+
+        if(!FileUtil.exist(getUploadFileFolder() + FileUtil.FILE_SEPARATOR + bucketName)) {
+            FileUtil.mkdir(getUploadFileFolder() + FileUtil.FILE_SEPARATOR + bucketName);
+        }
         FileUtil.writeFromStream(inputStream, getUploadFileFolder() + FileUtil.FILE_SEPARATOR + bucketName + FileUtil.FILE_SEPARATOR + key);
     }
 
@@ -295,11 +286,11 @@ public class DevFileLocalUtil {
      *
      * @param bucketName     桶名称
      * @param key            唯一标示id，例如a.txt, doc/a.txt
-     * @param devFileBucketAuthEnum 文件权限
+     * @param sgFileBucketAuthEnum 文件权限
      * @author xuyuxiang
      * @date 2022/1/5 23:24
      */
-    public static void setFileAcl(String bucketName, String key, DevFileBucketAuthEnum devFileBucketAuthEnum) {
+    public static void setFileAcl(String bucketName, String key, SgFileBucketAuthEnum sgFileBucketAuthEnum) {
         // 无需
     }
 

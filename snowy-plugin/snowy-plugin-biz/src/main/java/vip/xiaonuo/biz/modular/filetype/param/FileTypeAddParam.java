@@ -25,7 +25,7 @@ import java.util.Date;
  * 文件类型添加参数
  *
  * @author zzb
- * @date  2025/01/17 15:04
+ * @date  2025/01/20 14:38
  **/
 @Getter
 @Setter
@@ -36,6 +36,10 @@ public class FileTypeAddParam {
     @NotBlank(message = "name不能为空")
     private String name;
 
+    /** 父ID */
+    @Schema(description = "父ID")
+    private String pid;
+
     /** 排序 */
     @Schema(description = "排序")
     private Integer sortCode;
@@ -43,5 +47,9 @@ public class FileTypeAddParam {
     /** 备注 */
     @Schema(description = "备注")
     private String remark;
+
+    /** 扩展信息 */
+    @Schema(description = "扩展信息")
+    private String extJson;
 
 }

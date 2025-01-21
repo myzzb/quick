@@ -10,48 +10,74 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package vip.xiaonuo.biz.modular.filetype.entity;
+package vip.xiaonuo.biz.modular.file.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
-import vip.xiaonuo.common.pojo.CommonEntity;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 文件类型实体
+ * 文件资源实体
  *
  * @author zzb
- * @date  2025/01/17 15:04
+ * @date  2025/01/20 18:03
  **/
 @Getter
 @Setter
-@TableName("sg_file_type")
-public class FileType extends CommonEntity {
+@TableName("sg_file")
+public class SgFile {
 
     /** ID */
     @TableId
     @Schema(description = "ID")
     private String id;
 
-    /** 名称 */
-    @Schema(description = "名称")
+    /** 存储引擎 */
+    @Schema(description = "存储引擎")
+    private String engine;
+
+    /** 存储桶 */
+    @Schema(description = "存储桶")
+    private String bucket;
+
+    /** 文件类型ID */
+    @Schema(description = "文件类型ID")
+    private String fileTypeId;
+
+    /** 文件名称 */
+    @Schema(description = "文件名称")
     private String name;
 
-    /** 父ID */
-    @Schema(description = "父ID")
-    private String pid;
+    /** 文件后缀 */
+    @Schema(description = "文件后缀")
+    private String suffix;
 
-    /** 排序 */
-    @Schema(description = "排序")
-    private Integer sortCode;
+    /** 文件大小kb */
+    @Schema(description = "文件大小kb")
+    private Long sizeKb;
 
-    /** 备注 */
-    @Schema(description = "备注")
-    private String remark;
+    /** 文件大小（格式化后） */
+    @Schema(description = "文件大小（格式化后）")
+    private String sizeInfo;
+
+    /** 文件的对象名（唯一名称） */
+    @Schema(description = "文件的对象名（唯一名称）")
+    private String objName;
+
+    /** 文件存储路径 */
+    @Schema(description = "文件存储路径")
+    private String storagePath;
+
+    /** 文件下载路径 */
+    @Schema(description = "文件下载路径")
+    private String downloadPath;
+
+    /** 图片缩略图 */
+    @Schema(description = "图片缩略图")
+    private String thumbnail;
 
     /** 扩展信息 */
     @Schema(description = "扩展信息")
@@ -73,13 +99,13 @@ public class FileType extends CommonEntity {
     @TableField(fill = FieldFill.INSERT)
     private String createUser;
 
-    /** 更新时间 */
-    @Schema(description = "更新时间")
+    /** 修改时间 */
+    @Schema(description = "修改时间")
     @TableField(fill = FieldFill.UPDATE)
     private Date updateTime;
 
-    /** 更新用户 */
-    @Schema(description = "更新用户")
+    /** 修改用户 */
+    @Schema(description = "修改用户")
     @TableField(fill = FieldFill.UPDATE)
     private String updateUser;
 }

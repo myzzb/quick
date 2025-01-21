@@ -39,6 +39,7 @@ import vip.xiaonuo.biz.modular.filetype.param.FileTypeIdParam;
 import vip.xiaonuo.biz.modular.filetype.param.FileTypePageParam;
 import vip.xiaonuo.biz.modular.filetype.service.FileTypeService;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -112,13 +113,12 @@ public class FileTypeServiceImpl extends ServiceImpl<FileTypeMapper, FileType> i
         List<FileType> resourceList = this.list(lambdaQueryWrapper);
 
 
-        List<TreeNode<String>> treeNodeList = resourceList.stream().map(FileType ->
-                        new TreeNode<>(FileType.getId(), FileType.getPid(),
-                                FileType.getName(), FileType.getSortCode()).setExtra(JSONUtil.parseObj(FileType)))
+        List<TreeNode<String>> treeNodeList = resourceList.stream().map(fileType ->
+                        new TreeNode<>(fileType.getId(), fileType.getPid(),fileType.getName(),fileType.getSortCode()).setExtra(JSONUtil.parseObj(fileType)))
                 .collect(Collectors.toList());
-        return TreeUtil.build(treeNodeList, "0");
 
-        List<Tree<String>> build = TreeUtil.build(treeNodeList, "0");
+
+        List<Tree<String>> build = TreeUtil.build(treeNodeList, null);
         log.info("fileTypeTreeSelector is end, result is {}", JSONObject.toJSONString(build));
         return build;
     }

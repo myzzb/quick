@@ -10,51 +10,46 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package vip.xiaonuo.biz.modular.filetype.param;
+package vip.xiaonuo.biz.modular.file.param;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 文件类型编辑参数
+ * 文件资源查询参数
  *
  * @author zzb
- * @date  2025/01/20 14:38
+ * @date  2025/01/20 18:03
  **/
 @Getter
 @Setter
-public class FileTypeEditParam {
+public class SgFilePageParam {
 
-    /** ID */
-    @Schema(description = "ID", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "id不能为空")
-    private String id;
+    /** 当前页 */
+    @Schema(description = "当前页码")
+    private Integer current;
 
-    /** 名称 */
-    @Schema(description = "名称", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "name不能为空")
+    /** 每页条数 */
+    @Schema(description = "每页条数")
+    private Integer size;
+
+    /** 排序字段 */
+    @Schema(description = "排序字段，字段驼峰名称，如：userName")
+    private String sortField;
+
+    /** 排序方式 */
+    @Schema(description = "排序方式，升序：ASCEND；降序：DESCEND")
+    private String sortOrder;
+
+    /** 关键词 */
+    @Schema(description = "关键词")
+    private String searchKey;
+
+    /** 文件名称 */
+    @Schema(description = "文件名称")
     private String name;
-
-    /** 父ID */
-    @Schema(description = "父ID")
-    private String pid;
-
-    /** 排序 */
-    @Schema(description = "排序")
-    private Integer sortCode;
-
-    /** 备注 */
-    @Schema(description = "备注")
-    private String remark;
-
-    /** 扩展信息 */
-    @Schema(description = "扩展信息")
-    private String extJson;
 
 }
