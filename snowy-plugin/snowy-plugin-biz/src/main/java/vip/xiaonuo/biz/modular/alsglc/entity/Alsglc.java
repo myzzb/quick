@@ -51,6 +51,10 @@ public class Alsglc {
     @Schema(description = "流程内容")
     private String lcnr;
 
+    /** 流程步骤排序 */
+    @Schema(description = "流程步骤排序")
+    private Integer lcbzSort;
+
     /** 排序 */
     @Schema(description = "排序")
     private Integer sortCode;

@@ -51,9 +51,14 @@ public class AlsglcAddParam {
     @NotBlank(message = "lcnr不能为空")
     private String lcnr;
 
+    /** 流程步骤排序 */
+    @Schema(description = "流程步骤排序")
+    @NotNull(message = "sortCode不能为空")
+    private Integer lcbzSort;
+
+
     /** 排序 */
     @Schema(description = "排序", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "sortCode不能为空")
     private Integer sortCode;
 
     /** 备注 */

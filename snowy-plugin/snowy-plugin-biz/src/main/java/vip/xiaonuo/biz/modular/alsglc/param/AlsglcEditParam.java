@@ -36,6 +36,16 @@ public class AlsglcEditParam {
     @NotBlank(message = "sglcId不能为空")
     private String sglcId;
 
+    /** 案例教学ID */
+    @Schema(description = "案例教学ID", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank(message = "aljxId不能为空")
+    private String aljxId;
+
+    /** 案例教学事故名称 */
+    @Schema(description = "案例教学事故名称", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank(message = "sgmc不能为空")
+    private String sgmc;
+
     /** 流程名称 */
     @Schema(description = "流程名称", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "lcmc不能为空")
@@ -46,9 +56,14 @@ public class AlsglcEditParam {
     @NotBlank(message = "lcnr不能为空")
     private String lcnr;
 
-    /** 排序 */
-    @Schema(description = "排序", requiredMode = Schema.RequiredMode.REQUIRED)
+    /** 流程步骤排序 */
+    @Schema(description = "流程步骤排序")
     @NotNull(message = "sortCode不能为空")
+    private Integer lcbzSort;
+
+
+    /** 排序 */
+    @Schema(description = "排序")
     private Integer sortCode;
 
     /** 备注 */

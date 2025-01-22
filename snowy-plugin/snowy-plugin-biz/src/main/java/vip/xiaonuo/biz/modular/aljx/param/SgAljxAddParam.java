@@ -77,6 +77,11 @@ public class SgAljxAddParam {
     @Schema(description = "事故致因分析")
     private String sgzyfx;
 
+    /** 事故影像资料 */
+    @Schema(description = "事故影像资料UUID")
+    private String imageFile;
+
+
     /** 排序 */
     @Schema(description = "排序")
     private Integer sortCode;
