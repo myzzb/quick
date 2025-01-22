@@ -55,7 +55,9 @@ import java.util.stream.Collectors;
 public class FileTypeServiceImpl extends ServiceImpl<FileTypeMapper, FileType> implements FileTypeService {
 
     @Override
-    public Page<FileType> page(FileTypePageParam fileTypePageParam) {
+    public Page<List<TreeNode<String>>> page(FileTypePageParam fileTypePageParam) {
+
+        log.info("select FileTypePage list is begin, param is {}", JSONObject.toJSONString(fileTypePageParam));
         QueryWrapper<FileType> queryWrapper = new QueryWrapper<FileType>().checkSqlInjection();
         if(ObjectUtil.isNotEmpty(fileTypePageParam.getName())) {
             queryWrapper.lambda().like(FileType::getName, fileTypePageParam.getName());
@@ -67,7 +69,39 @@ public class FileTypeServiceImpl extends ServiceImpl<FileTypeMapper, FileType> i
         } else {
             queryWrapper.lambda().orderByAsc(FileType::getSortCode);
         }
-        return this.page(CommonPageRequest.defaultPage(), queryWrapper);
+        List<FileType> resourceList = this.list(queryWrapper);
+
+
+        List<TreeNode<String>> treeNodeList = resourceList.stream().map(fileType ->
+                        new TreeNode<>(fileType.getId(), fileType.getPid(),fileType.getName(),fileType.getSortCode()).setExtra(JSONUtil.parseObj(fileType)))
+                .collect(Collectors.toList());
+
+
+        List<Tree<String>> build = TreeUtil.build(treeNodeList, null);
+
+        Page page = new Page<>(CommonPageRequest.defaultPage().getCurrent(), CommonPageRequest.defaultPage().getSize(), build.size());
+        page.setRecords(build);
+        // page.setPages(build.size());
+        // page.setCurrent(fileTypePageParam.getCurrent());
+        // page.setSize(build.size());
+        // page.setTotal(build.size());
+
+        log.info("select FileTypePage list is end, result is {}", JSONObject.toJSONString(page));
+        return page;
+        // 原始生成的代码 start
+        // QueryWrapper<FileType> queryWrapper = new QueryWrapper<FileType>().checkSqlInjection();
+        // if(ObjectUtil.isNotEmpty(fileTypePageParam.getName())) {
+        //     queryWrapper.lambda().like(FileType::getName, fileTypePageParam.getName());
+        // }
+        // if(ObjectUtil.isAllNotEmpty(fileTypePageParam.getSortField(), fileTypePageParam.getSortOrder())) {
+        //     CommonSortOrderEnum.validate(fileTypePageParam.getSortOrder());
+        //     queryWrapper.orderBy(true, fileTypePageParam.getSortOrder().equals(CommonSortOrderEnum.ASC.getValue()),
+        //             StrUtil.toUnderlineCase(fileTypePageParam.getSortField()));
+        // } else {
+        //     queryWrapper.lambda().orderByAsc(FileType::getSortCode);
+        // }
+        // return this.page(CommonPageRequest.defaultPage(), queryWrapper);
+        // 原始生成的代码 start
     }
 
     @Transactional(rollbackFor = Exception.class)

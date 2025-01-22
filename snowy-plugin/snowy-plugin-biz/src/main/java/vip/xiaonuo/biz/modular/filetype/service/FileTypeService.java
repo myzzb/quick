@@ -13,6 +13,7 @@
 package vip.xiaonuo.biz.modular.filetype.service;
 
 import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeNode;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import vip.xiaonuo.biz.modular.filetype.entity.FileType;
@@ -37,7 +38,7 @@ public interface FileTypeService extends IService<FileType> {
      * @author zzb
      * @date  2025/01/17 15:04
      */
-    Page<FileType> page(FileTypePageParam fileTypePageParam);
+    Page<List<TreeNode<String>>> page(FileTypePageParam fileTypePageParam);
 
     /**
      * 添加文件类型

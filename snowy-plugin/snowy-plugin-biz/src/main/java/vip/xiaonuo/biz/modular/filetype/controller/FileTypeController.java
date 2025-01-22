@@ -14,6 +14,7 @@ package vip.xiaonuo.biz.modular.filetype.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeNode;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
@@ -59,7 +60,7 @@ public class FileTypeController {
     @Operation(summary = "获取文件类型分页")
     //@SaCheckPermission("/biz/filetype/page")
     @GetMapping("/biz/filetype/page")
-    public CommonResult<Page<FileType>> page(FileTypePageParam fileTypePageParam) {
+    public CommonResult<Page<List<TreeNode<String>>>> page(FileTypePageParam fileTypePageParam) {
         return CommonResult.data(fileTypeService.page(fileTypePageParam));
     }
 
