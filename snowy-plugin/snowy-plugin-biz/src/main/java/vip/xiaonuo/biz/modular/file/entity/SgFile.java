@@ -48,7 +48,7 @@ public class SgFile {
     private String fileTypeId;
 
     /** 文件类型名称 */
-    @Schema(description = "文件类型ID")
+    @Schema(description = "文件类型名称")
     @TableField(exist = false)
     private String fileTypeName;
 
