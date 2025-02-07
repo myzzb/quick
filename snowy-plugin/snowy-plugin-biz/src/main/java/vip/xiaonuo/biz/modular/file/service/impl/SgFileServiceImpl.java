@@ -272,6 +272,8 @@ public class SgFileServiceImpl extends ServiceImpl<SgFileMapper, SgFile> impleme
             FileType fileType = fileTypeMapper.selectById(item.getFileTypeId());
             if (ObjectUtil.isNotEmpty(fileType)) {
                 item.setFileTypeName(fileType.getName());
+            } else {
+                item.setFileTypeName("未知");
             }
         });
         log.info("select SgFile page is end, result is {}", JSONObject.toJSONString(page));

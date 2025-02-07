@@ -77,9 +77,12 @@ public class FileTypeServiceImpl extends ServiceImpl<FileTypeMapper, FileType> i
                 .collect(Collectors.toList());
 
 
-        List<Tree<String>> build = TreeUtil.build(treeNodeList, null);
-
-        Page page = new Page<>(CommonPageRequest.defaultPage().getCurrent(), CommonPageRequest.defaultPage().getSize(), build.size());
+        List<Tree<String>> build = TreeUtil.build(treeNodeList, "");
+        long total = 0;
+        if (build != null) {
+            total = build.size();
+        }
+        Page page = new Page<>(CommonPageRequest.defaultPage().getCurrent(), CommonPageRequest.defaultPage().getSize(), total);
         page.setRecords(build);
         // page.setPages(build.size());
         // page.setCurrent(fileTypePageParam.getCurrent());
@@ -152,7 +155,7 @@ public class FileTypeServiceImpl extends ServiceImpl<FileTypeMapper, FileType> i
                 .collect(Collectors.toList());
 
 
-        List<Tree<String>> build = TreeUtil.build(treeNodeList, null);
+        List<Tree<String>> build = TreeUtil.build(treeNodeList, "");
         log.info("fileTypeTreeSelector is end, result is {}", JSONObject.toJSONString(build));
         return build;
     }
