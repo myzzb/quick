@@ -46,6 +46,9 @@ public class SgYwjxServiceImpl extends ServiceImpl<SgYwjxMapper, SgYwjx> impleme
     @Override
     public Page<SgYwjx> page(SgYwjxPageParam sgYwjxPageParam) {
         QueryWrapper<SgYwjx> queryWrapper = new QueryWrapper<SgYwjx>().checkSqlInjection();
+        if(ObjectUtil.isNotEmpty(sgYwjxPageParam.getYwfl())) {
+            queryWrapper.lambda().like(SgYwjx::getYwfl, sgYwjxPageParam.getYwfl());
+        }
         if(ObjectUtil.isNotEmpty(sgYwjxPageParam.getSglx())) {
             queryWrapper.lambda().like(SgYwjx::getSglx, sgYwjxPageParam.getSglx());
         }

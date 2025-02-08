@@ -48,6 +48,10 @@ public class SgYwjxPageParam {
     @Schema(description = "关键词")
     private String searchKey;
 
+    /** 业务分类 */
+    @Schema(description = "业务分类")
+    private String ywfl;
+
     /** 事故类型(例：火灾、地震、洪涝) */
     @Schema(description = "事故类型(例：火灾、地震、洪涝)")
     private String sglx;
