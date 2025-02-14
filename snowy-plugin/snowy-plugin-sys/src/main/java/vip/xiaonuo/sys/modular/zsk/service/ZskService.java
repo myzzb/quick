@@ -14,6 +14,7 @@ package vip.xiaonuo.sys.modular.zsk.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
 import vip.xiaonuo.sys.modular.zsk.entity.Zsk;
 import vip.xiaonuo.sys.modular.zsk.param.ZskAddParam;
@@ -21,6 +22,7 @@ import vip.xiaonuo.sys.modular.zsk.param.ZskEditParam;
 import vip.xiaonuo.sys.modular.zsk.param.ZskIdParam;
 import vip.xiaonuo.sys.modular.zsk.param.ZskPageParam;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -31,6 +33,7 @@ import java.util.List;
  **/
 public interface ZskService extends IService<Zsk> {
 
+    void download(ZskIdParam zskIdParam, HttpServletResponse response) throws IOException;
     /**
     * @description 知识库文件上传
     * @return java.lang.String

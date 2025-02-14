@@ -18,14 +18,18 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +37,8 @@ import vip.xiaonuo.common.enums.CommonSortOrderEnum;
 import vip.xiaonuo.common.exception.CommonException;
 import vip.xiaonuo.common.page.CommonPageRequest;
 import vip.xiaonuo.common.prop.CommonProperties;
+import vip.xiaonuo.common.util.CommonDownloadUtil;
+import vip.xiaonuo.common.util.CommonResponseUtil;
 import vip.xiaonuo.sys.modular.zsk.entity.Zsk;
 import vip.xiaonuo.sys.modular.zsk.enums.ZskFileEngineTypeEnum;
 import vip.xiaonuo.sys.modular.zsk.mapper.ZskMapper;
@@ -46,6 +52,8 @@ import vip.xiaonuo.sys.modular.zsk.util.ZskFileLocalUtil;
 import vip.xiaonuo.sys.modular.zskfl.entity.ZskFl;
 import vip.xiaonuo.sys.modular.zskfl.mapper.ZskFlMapper;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -56,6 +64,7 @@ import java.util.List;
  * @author zzb
  * @date  2025/02/13 10:58
  **/
+@Slf4j
 @Service
 public class ZskServiceImpl extends ServiceImpl<ZskMapper, Zsk> implements ZskService {
 
@@ -67,6 +76,29 @@ public class ZskServiceImpl extends ServiceImpl<ZskMapper, Zsk> implements ZskSe
      **/
     @Resource
     private ZskFlMapper zskFlMapper;
+
+    @Override
+    public void download(ZskIdParam zskIdParam, HttpServletResponse response) throws IOException {
+        log.info("download is begin, param is {}", JSONObject.toJSONString(zskIdParam));
+        Zsk zsk;
+        try {
+            zsk = this.queryEntity(zskIdParam.getZskId());
+        } catch (Exception e) {
+            CommonResponseUtil.renderError(response, e.getMessage());
+            return;
+        }
+        if(!zsk.getEngine().equals(ZskFileEngineTypeEnum.LOCAL.getValue())) {
+            CommonResponseUtil.renderError(response, "非本地文件不支持此方式下载，id值为：" + zsk.getZskId());
+            return;
+        }
+        File file = FileUtil.file(zsk.getStoragePath());
+        if(!FileUtil.exist(file)) {
+            CommonResponseUtil.renderError(response, "找不到存储的文件，id值为：" + zsk.getZskId());
+            return;
+        }
+        CommonDownloadUtil.download(zsk.getName(), IoUtil.readBytes(FileUtil.getInputStream(file)), response);
+        log.info("download is end, not result ");
+    }
 
     @Override
     public String uploadReturnUrl(String engine, MultipartFile file, String ZskFlId) {
@@ -163,7 +195,7 @@ public class ZskServiceImpl extends ServiceImpl<ZskMapper, Zsk> implements ZskSe
             if(ObjectUtil.isEmpty(apiUrl)) {
                 throw new CommonException("后端域名地址未正确配置：snowy.config.common.backend-url为空");
             }
-            downloadUrl= apiUrl + "/sg/file/download?id=" + fileId;
+            downloadUrl= apiUrl + "/sys/zsk/download?id=" + fileId;
             zsk.setDownloadPath(downloadUrl);
         } else {
             // 阿里云、腾讯云、MINIO可以直接使用存储地址（公网）作为下载地址

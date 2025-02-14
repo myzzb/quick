@@ -18,6 +18,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +40,8 @@ import vip.xiaonuo.sys.modular.zsk.service.ZskService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -54,6 +58,13 @@ public class ZskController {
     @Resource
     private ZskService zskService;
 
+
+    @Operation(summary = "下载文件")
+    @CommonLog("下载文件")
+    @GetMapping(value = "/sys/zsk/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public void download(@Valid ZskIdParam zskIdParam, HttpServletResponse response) throws IOException {
+        zskService.download(zskIdParam, response);
+    }
 
     @Operation(summary = "知识库上传本地文件返回url")
     @CommonLog("知识库上传本地文件返回url")
