@@ -14,11 +14,14 @@ package vip.xiaonuo.biz.modular.bqre.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import vip.xiaonuo.biz.modular.bq.vo.SgBqVO;
 import vip.xiaonuo.biz.modular.bqre.entity.SgBqRe;
 import vip.xiaonuo.biz.modular.bqre.param.SgBqReAddParam;
 import vip.xiaonuo.biz.modular.bqre.param.SgBqReEditParam;
 import vip.xiaonuo.biz.modular.bqre.param.SgBqReIdParam;
 import vip.xiaonuo.biz.modular.bqre.param.SgBqRePageParam;
+import vip.xiaonuo.biz.modular.bqre.vo.SgBqReVO;
+import vip.xiaonuo.biz.modular.sgsj.param.SgsjIdParam;
 
 import java.util.List;
 
@@ -77,4 +80,13 @@ public interface SgBqReService extends IService<SgBqRe> {
      * @date  2025/02/12 15:01
      **/
     SgBqRe queryEntity(String id);
+
+    /**
+    * @description 根据事故id获取事故标签关联
+    * @param sgsjIdParam 事故id
+    * @return java.util.List<vip.xiaonuo.biz.modular.bqre.vo.SgBqVO>
+    * @author zzb
+    * @date 2025/2/19 15:33
+    **/
+    List<SgBqVO> getBqReVOBySgId(SgsjIdParam sgsjIdParam);
 }

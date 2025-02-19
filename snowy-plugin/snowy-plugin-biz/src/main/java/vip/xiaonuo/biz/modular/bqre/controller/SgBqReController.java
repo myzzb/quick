@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import vip.xiaonuo.biz.modular.bq.vo.SgBqVO;
+import vip.xiaonuo.biz.modular.bqre.vo.SgBqReVO;
+import vip.xiaonuo.biz.modular.sgsj.param.SgsjIdParam;
 import vip.xiaonuo.common.annotation.CommonLog;
 import vip.xiaonuo.common.pojo.CommonResult;
 import vip.xiaonuo.biz.modular.bqre.entity.SgBqRe;
@@ -119,5 +122,11 @@ public class SgBqReController {
     @GetMapping("/biz/bqre/detail")
     public CommonResult<SgBqRe> detail(@Valid SgBqReIdParam sgBqReIdParam) {
         return CommonResult.data(sgBqReService.detail(sgBqReIdParam));
+    }
+
+    @Operation(summary = "获取事故标签列表")
+    @GetMapping("/biz/bqre/list")
+    public CommonResult<List<SgBqVO>> getBqReVOBySgId(SgsjIdParam sgsjIdParam)  {
+        return CommonResult.data(sgBqReService.getBqReVOBySgId(sgsjIdParam));
     }
 }

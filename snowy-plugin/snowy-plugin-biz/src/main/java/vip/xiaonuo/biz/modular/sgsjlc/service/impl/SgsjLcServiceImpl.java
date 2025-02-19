@@ -52,6 +52,9 @@ public class SgsjLcServiceImpl extends ServiceImpl<SgsjLcMapper, SgsjLc> impleme
         if(ObjectUtil.isNotEmpty(sgsjLcPageParam.getLcmc())) {
             queryWrapper.lambda().like(SgsjLc::getLcmc, sgsjLcPageParam.getLcmc());
         }
+        if(ObjectUtil.isNotEmpty(sgsjLcPageParam.getSgId())) {
+            queryWrapper.lambda().eq(SgsjLc::getSgId, sgsjLcPageParam.getSgId());
+        }
         if(ObjectUtil.isAllNotEmpty(sgsjLcPageParam.getSortField(), sgsjLcPageParam.getSortOrder())) {
             CommonSortOrderEnum.validate(sgsjLcPageParam.getSortOrder());
             queryWrapper.orderBy(true, sgsjLcPageParam.getSortOrder().equals(CommonSortOrderEnum.ASC.getValue()),
