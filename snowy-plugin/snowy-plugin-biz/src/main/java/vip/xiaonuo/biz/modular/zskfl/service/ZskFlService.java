@@ -16,6 +16,7 @@ import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import vip.xiaonuo.biz.modular.dict.entity.BizDict;
 import vip.xiaonuo.biz.modular.zskfl.param.ZskFlAddParam;
 import vip.xiaonuo.biz.modular.zskfl.param.ZskFlEditParam;
 import vip.xiaonuo.biz.modular.zskfl.param.ZskFlIdParam;
@@ -96,4 +97,11 @@ public interface ZskFlService extends IService<ZskFl> {
     * @date 2025/2/14 15:30
     **/
     List<ZskFl> getOneLevel(String type);
+
+    /**
+     * 获取业务字典列表
+     * @param dictType 字典类型
+     * @return List<BizDict>
+     */
+    List<BizDict> getDictList(String dictType);
 }

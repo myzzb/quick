@@ -52,8 +52,4 @@ public class SgAnswerRecordPageParam {
     @Schema(description = "用户姓名")
     private String userName;
 
-    /** 试卷名称 */
-    @Schema(description = "试卷名称")
-    private String paperName;
-
 }

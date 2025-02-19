@@ -31,14 +31,10 @@ import java.util.Date;
 @Setter
 public class SgQuestionAddParam {
 
-    /** 所属试卷ID(外键) */
-    @Schema(description = "所属试卷ID(外键)")
-    private String paperId;
-
-    /** 试卷名称 */
-    @Schema(description = "试卷名称", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "paperName不能为空")
-    private String paperName;
+    /** 业务分类/题目分类 */
+    @Schema(description = "业务分类/题目分类", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank(message = "ywfl不能为空")
+    private String ywfl;
 
     /** 试题名称 */
     @Schema(description = "试题名称", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -68,6 +64,11 @@ public class SgQuestionAddParam {
     @Schema(description = "试题类型", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "type不能为空")
     private String type;
+
+    /** 试题状态：已启用(启用)；未启用(禁用) */
+    @Schema(description = "试题状态：已启用(启用)；未启用(禁用)")
+    @NotBlank(message = "status不能为空")
+    private String status;
 
     /** 排序 */
     @Schema(description = "排序")

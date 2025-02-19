@@ -14,6 +14,7 @@ package vip.xiaonuo.biz.modular.question.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.validation.annotation.Validated;
@@ -119,5 +120,13 @@ public class SgQuestionController {
     @GetMapping("/biz/question/detail")
     public CommonResult<SgQuestion> detail(@Valid SgQuestionIdParam sgQuestionIdParam) {
         return CommonResult.data(sgQuestionService.detail(sgQuestionIdParam));
+    }
+
+    @Operation(summary = "获取随机试题")
+//    @SaCheckPermission("/biz/question/random/list")
+    @GetMapping("/biz/question/random/list")
+    @ApiImplicitParam(name = "ywfl", value = "业务分类", required = true, dataType = "String")
+    public CommonResult<List<SgQuestion>> list(String ywfl) {
+        return CommonResult.data(sgQuestionService.list(ywfl));
     }
 }

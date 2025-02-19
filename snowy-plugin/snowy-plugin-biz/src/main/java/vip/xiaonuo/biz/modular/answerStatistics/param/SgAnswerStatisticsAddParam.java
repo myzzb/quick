@@ -31,13 +31,9 @@ import java.util.Date;
 @Setter
 public class SgAnswerStatisticsAddParam {
 
-    /** 试卷ID */
-    @Schema(description = "试卷ID")
-    private String paperId;
-
     /** 试卷名称 */
-    @Schema(description = "试卷名称")
-    private String paperName;
+    @Schema(description = "答题统计名称")
+    private String name;
 
     /** 用户ID */
     @Schema(description = "用户ID")

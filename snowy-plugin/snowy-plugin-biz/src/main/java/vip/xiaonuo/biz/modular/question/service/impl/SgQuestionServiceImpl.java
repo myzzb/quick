@@ -20,6 +20,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vip.xiaonuo.biz.modular.paper.param.SgPaperIdParam;
@@ -48,14 +50,17 @@ public class SgQuestionServiceImpl extends ServiceImpl<SgQuestionMapper, SgQuest
     @Override
     public Page<SgQuestion> page(SgQuestionPageParam sgQuestionPageParam) {
         QueryWrapper<SgQuestion> queryWrapper = new QueryWrapper<SgQuestion>().checkSqlInjection();
-        if(ObjectUtil.isNotEmpty(sgQuestionPageParam.getPaperName())) {
-            queryWrapper.lambda().like(SgQuestion::getPaperName, sgQuestionPageParam.getPaperName());
+        if(ObjectUtil.isNotEmpty(sgQuestionPageParam.getYwfl())) {
+            queryWrapper.lambda().like(SgQuestion::getYwfl, sgQuestionPageParam.getYwfl());
         }
         if(ObjectUtil.isNotEmpty(sgQuestionPageParam.getQuestionName())) {
             queryWrapper.lambda().like(SgQuestion::getQuestionName, sgQuestionPageParam.getQuestionName());
         }
         if(ObjectUtil.isNotEmpty(sgQuestionPageParam.getType())) {
             queryWrapper.lambda().eq(SgQuestion::getType, sgQuestionPageParam.getType());
+        }
+        if(ObjectUtil.isNotEmpty(sgQuestionPageParam.getStatus())) {
+            queryWrapper.lambda().eq(SgQuestion::getStatus, sgQuestionPageParam.getStatus());
         }
         if(ObjectUtil.isAllNotEmpty(sgQuestionPageParam.getSortField(), sgQuestionPageParam.getSortOrder())) {
             CommonSortOrderEnum.validate(sgQuestionPageParam.getSortOrder());
@@ -105,10 +110,21 @@ public class SgQuestionServiceImpl extends ServiceImpl<SgQuestionMapper, SgQuest
 
     @Override
     public List<SgQuestion> question(SgPaperIdParam sgPaperIdParam) {
-        if(ObjectUtil.isEmpty(sgPaperIdParam.getId())) {
+//        if(ObjectUtil.isEmpty(sgPaperIdParam.getId())) {
+//            throw new CommonException("请检查参数是否正确");
+//        }
+//        LambdaQueryWrapper<SgQuestion> lambdaQueryWrapper = new QueryWrapper<SgQuestion>().checkSqlInjection().lambda().eq(SgQuestion::getPaperId, sgPaperIdParam.getId()).orderByAsc(SgQuestion::getSortCode);
+//        return this.list(lambdaQueryWrapper);
+        return null;
+    }
+
+
+    @Override
+    public List<SgQuestion> list(String ywfl) {
+        if(ObjectUtil.isEmpty(ywfl)) {
             throw new CommonException("请检查参数是否正确");
         }
-        LambdaQueryWrapper<SgQuestion> lambdaQueryWrapper = new QueryWrapper<SgQuestion>().checkSqlInjection().lambda().eq(SgQuestion::getPaperId, sgPaperIdParam.getId()).orderByAsc(SgQuestion::getSortCode);
-        return this.list(lambdaQueryWrapper);
+        List<SgQuestion> randomList = this.baseMapper.selectRandomList(ywfl);
+        return randomList;
     }
 }

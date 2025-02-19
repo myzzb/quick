@@ -15,6 +15,8 @@ package vip.xiaonuo.biz.modular.question.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import vip.xiaonuo.biz.modular.question.entity.SgQuestion;
 
+import java.util.List;
+
 /**
  * 试题Mapper接口
  *
@@ -22,4 +24,5 @@ import vip.xiaonuo.biz.modular.question.entity.SgQuestion;
  * @date  2025/02/07 17:43
  **/
 public interface SgQuestionMapper extends BaseMapper<SgQuestion> {
+    List<SgQuestion> selectRandomList(String ywfl);
 }

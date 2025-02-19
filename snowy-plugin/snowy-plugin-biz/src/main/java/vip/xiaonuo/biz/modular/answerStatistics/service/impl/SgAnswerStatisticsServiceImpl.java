@@ -48,9 +48,6 @@ public class SgAnswerStatisticsServiceImpl extends ServiceImpl<SgAnswerStatistic
     @Override
     public Page<SgAnswerStatistics> page(SgAnswerStatisticsPageParam sgAnswerStatisticsPageParam) {
         QueryWrapper<SgAnswerStatistics> queryWrapper = new QueryWrapper<SgAnswerStatistics>().checkSqlInjection();
-        if(ObjectUtil.isNotEmpty(sgAnswerStatisticsPageParam.getPaperName())) {
-            queryWrapper.lambda().like(SgAnswerStatistics::getPaperName, sgAnswerStatisticsPageParam.getPaperName());
-        }
         if(ObjectUtil.isNotEmpty(sgAnswerStatisticsPageParam.getUserName())) {
             queryWrapper.lambda().like(SgAnswerStatistics::getUserName, sgAnswerStatisticsPageParam.getUserName());
         }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import vip.xiaonuo.biz.modular.answerStatistics.entity.SgAnswerStatistics;
 import vip.xiaonuo.common.annotation.CommonLog;
 import vip.xiaonuo.common.pojo.CommonResult;
 import vip.xiaonuo.biz.modular.answerRecord.entity.SgAnswerRecord;
@@ -121,11 +122,10 @@ public class SgAnswerRecordController {
         return CommonResult.data(sgAnswerRecordService.detail(sgAnswerRecordIdParam));
     }
 
-    @Operation(summary = "提交试卷")
-    @CommonLog("添加答题记录")
+    @Operation(summary = "提交在线答题")
 //    @SaCheckPermission("/biz/answerRecord/add")
     @PostMapping("/biz/answerRecord/submit")
-    public CommonResult<Integer> submitAnswer(@RequestBody @Valid List<SgAnswerRecordAddParam> answerRecordAddParamList) {
+    public CommonResult<SgAnswerStatistics> submitAnswer(@RequestBody @Valid List<SgAnswerRecordAddParam> answerRecordAddParamList) {
         return CommonResult.data(sgAnswerRecordService.submitAnswer(answerRecordAddParamList));
     }
 }

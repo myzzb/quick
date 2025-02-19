@@ -16,11 +16,18 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import vip.xiaonuo.biz.modular.sgsj.entity.Sgsj;
+import vip.xiaonuo.biz.modular.sgsj.param.SgsjAddParam;
+import vip.xiaonuo.biz.modular.sgsj.param.SgsjEditParam;
+import vip.xiaonuo.biz.modular.sgsj.param.SgsjIdParam;
+import vip.xiaonuo.biz.modular.sgsj.param.SgsjPageParam;
+import vip.xiaonuo.biz.modular.sgsj.service.SgsjService;
 import vip.xiaonuo.common.annotation.CommonLog;
 import vip.xiaonuo.common.pojo.CommonResult;
 import vip.xiaonuo.biz.modular.aljx.entity.SgAljx;
@@ -49,6 +56,9 @@ public class SgAljxController {
     @Resource
     private SgAljxService sgAljxService;
 
+    @Resource
+    private SgsjService sgsjService;
+
     /**
      * 获取案例教学分页
      *
@@ -58,8 +68,11 @@ public class SgAljxController {
     @Operation(summary = "获取案例教学分页")
     @SaCheckPermission("/biz/aljx/page")
     @GetMapping("/biz/aljx/page")
-    public CommonResult<Page<SgAljx>> page(SgAljxPageParam sgAljxPageParam) {
-        return CommonResult.data(sgAljxService.page(sgAljxPageParam));
+    public CommonResult<Page<Sgsj>> page(SgAljxPageParam sgAljxPageParam) {
+        SgsjPageParam sgsjPageParam = new SgsjPageParam();
+        BeanUtils.copyProperties(sgAljxPageParam, sgsjPageParam);
+        sgsjPageParam.setIsAljx("TRUE");
+        return CommonResult.data(sgsjService.page(sgsjPageParam));
     }
 
     /**
@@ -72,8 +85,9 @@ public class SgAljxController {
     @CommonLog("添加案例教学")
     @SaCheckPermission("/biz/aljx/add")
     @PostMapping("/biz/aljx/add")
-    public CommonResult<String> add(@RequestBody @Valid SgAljxAddParam sgAljxAddParam) {
-        sgAljxService.add(sgAljxAddParam);
+    public CommonResult<String> add(@RequestBody @Valid SgsjAddParam sgsjAddParam) {
+        sgsjAddParam.setIsAljx("TRUE");
+        sgsjService.add(sgsjAddParam);
         return CommonResult.ok();
     }
 
@@ -87,8 +101,8 @@ public class SgAljxController {
     @CommonLog("编辑案例教学")
     @SaCheckPermission("/biz/aljx/edit")
     @PostMapping("/biz/aljx/edit")
-    public CommonResult<String> edit(@RequestBody @Valid SgAljxEditParam sgAljxEditParam) {
-        sgAljxService.edit(sgAljxEditParam);
+    public CommonResult<String> edit(@RequestBody @Valid SgsjEditParam sgsjEditParam) {
+        sgsjService.edit(sgsjEditParam);
         return CommonResult.ok();
     }
 
@@ -103,8 +117,8 @@ public class SgAljxController {
     @SaCheckPermission("/biz/aljx/delete")
     @PostMapping("/biz/aljx/delete")
     public CommonResult<String> delete(@RequestBody @Valid @NotEmpty(message = "集合不能为空")
-                                                   List<SgAljxIdParam> sgAljxIdParamList) {
-        sgAljxService.delete(sgAljxIdParamList);
+                                               List<SgsjIdParam> sgsjIdParamList) {
+        sgsjService.delete(sgsjIdParamList);
         return CommonResult.ok();
     }
 
@@ -117,7 +131,7 @@ public class SgAljxController {
     @Operation(summary = "获取案例教学详情")
     @SaCheckPermission("/biz/aljx/detail")
     @GetMapping("/biz/aljx/detail")
-    public CommonResult<SgAljx> detail(@Valid SgAljxIdParam sgAljxIdParam) {
-        return CommonResult.data(sgAljxService.detail(sgAljxIdParam));
+    public CommonResult<Sgsj> detail(@Valid SgsjIdParam sgsjIdParam) {
+        return CommonResult.data(sgsjService.detail(sgsjIdParam));
     }
 }

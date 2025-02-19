@@ -48,9 +48,9 @@ public class SgQuestionPageParam {
     @Schema(description = "关键词")
     private String searchKey;
 
-    /** 试卷名称 */
-    @Schema(description = "试卷名称")
-    private String paperName;
+    /** 业务分类/题目分类 */
+    @Schema(description = "业务分类/题目分类")
+    private String ywfl;
 
     /** 试题名称 */
     @Schema(description = "试题名称")
@@ -59,5 +59,10 @@ public class SgQuestionPageParam {
     /** 试题类型 */
     @Schema(description = "试题类型")
     private String type;
+
+    /** 试题状态：已启用(启用)；未启用(禁用) */
+    @Schema(description = "试题状态：已启用(启用)；未启用(禁用)")
+    private String status;
+
 
 }

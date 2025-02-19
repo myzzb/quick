@@ -43,17 +43,13 @@ public class SgAnswerRecordAddParam {
     @Schema(description = "用户姓名")
     private String userName;
 
-    /** 试卷ID(外键) */
-    @Schema(description = "试卷ID(外键)")
-    private String paperId;
-
-    /** 试卷名称 */
-    @Schema(description = "试卷名称")
-    private String paperName;
-
     /** 试题ID(外键ID) */
     @Schema(description = "试题ID(外键ID)")
     private String questionId;
+
+    /** 业务分类/题目分类 */
+    @Schema(description = "业务分类/题目分类")
+    private String ywfl;
 
     /** 试题名称 */
     @Schema(description = "试题名称")

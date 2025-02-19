@@ -85,4 +85,11 @@ public interface SgQuestionService extends IService<SgQuestion> {
      * @return List<SgQuestion>
      */
     List<SgQuestion> question(SgPaperIdParam sgPaperIdParam);
+
+    /**
+     * 获取随机试题
+     * @param ywfl 业务分类
+     * @return List<SgQuestion>
+     */
+    List<SgQuestion> list(String ywfl);
 }

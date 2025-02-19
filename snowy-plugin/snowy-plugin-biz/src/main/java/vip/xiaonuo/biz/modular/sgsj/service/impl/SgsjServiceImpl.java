@@ -60,10 +60,11 @@ public class SgsjServiceImpl extends ServiceImpl<SgsjMapper, Sgsj> implements Sg
         }
         if(ObjectUtil.isAllNotEmpty(sgsjPageParam.getSortField(), sgsjPageParam.getSortOrder())) {
             CommonSortOrderEnum.validate(sgsjPageParam.getSortOrder());
-            queryWrapper.orderBy(true, sgsjPageParam.getSortOrder().equals(CommonSortOrderEnum.ASC.getValue()),
+            queryWrapper.orderBy(true, sgsjPageParam.getSortOrder().equals(CommonSortOrderEnum.DESC.getValue()),
                     StrUtil.toUnderlineCase(sgsjPageParam.getSortField()));
         } else {
-            queryWrapper.lambda().orderByAsc(Sgsj::getSortCode);
+//            queryWrapper.lambda().orderByAsc(Sgsj::getSortCode);
+            queryWrapper.lambda().orderByDesc(Sgsj::getCreateTime);
         }
         return this.page(CommonPageRequest.defaultPage(), queryWrapper);
     }

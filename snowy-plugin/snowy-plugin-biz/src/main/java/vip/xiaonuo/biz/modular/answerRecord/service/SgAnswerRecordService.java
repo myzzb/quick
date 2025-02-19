@@ -19,6 +19,7 @@ import vip.xiaonuo.biz.modular.answerRecord.param.SgAnswerRecordAddParam;
 import vip.xiaonuo.biz.modular.answerRecord.param.SgAnswerRecordEditParam;
 import vip.xiaonuo.biz.modular.answerRecord.param.SgAnswerRecordIdParam;
 import vip.xiaonuo.biz.modular.answerRecord.param.SgAnswerRecordPageParam;
+import vip.xiaonuo.biz.modular.answerStatistics.entity.SgAnswerStatistics;
 import vip.xiaonuo.biz.modular.answerStatistics.param.SgAnswerStatisticsIdParam;
 
 import java.util.List;
@@ -84,7 +85,7 @@ public interface SgAnswerRecordService extends IService<SgAnswerRecord> {
      * @param answerRecordAddParamList 试题参数
      * @return 用户试卷得分
      */
-    Integer submitAnswer(List<SgAnswerRecordAddParam> answerRecordAddParamList);
+    SgAnswerStatistics submitAnswer(List<SgAnswerRecordAddParam> answerRecordAddParamList);
 
     /**
      * 获取答题记录

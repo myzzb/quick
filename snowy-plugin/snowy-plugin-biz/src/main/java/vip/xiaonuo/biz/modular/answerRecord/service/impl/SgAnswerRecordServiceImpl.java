@@ -38,6 +38,9 @@ import vip.xiaonuo.biz.modular.answerRecord.param.SgAnswerRecordIdParam;
 import vip.xiaonuo.biz.modular.answerRecord.param.SgAnswerRecordPageParam;
 import vip.xiaonuo.biz.modular.answerRecord.service.SgAnswerRecordService;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -60,9 +63,6 @@ public class SgAnswerRecordServiceImpl extends ServiceImpl<SgAnswerRecordMapper,
         QueryWrapper<SgAnswerRecord> queryWrapper = new QueryWrapper<SgAnswerRecord>().checkSqlInjection();
         if(ObjectUtil.isNotEmpty(sgAnswerRecordPageParam.getUserName())) {
             queryWrapper.lambda().like(SgAnswerRecord::getUserName, sgAnswerRecordPageParam.getUserName());
-        }
-        if(ObjectUtil.isNotEmpty(sgAnswerRecordPageParam.getPaperName())) {
-            queryWrapper.lambda().like(SgAnswerRecord::getPaperName, sgAnswerRecordPageParam.getPaperName());
         }
         if(ObjectUtil.isAllNotEmpty(sgAnswerRecordPageParam.getSortField(), sgAnswerRecordPageParam.getSortOrder())) {
             CommonSortOrderEnum.validate(sgAnswerRecordPageParam.getSortOrder());
@@ -111,10 +111,13 @@ public class SgAnswerRecordServiceImpl extends ServiceImpl<SgAnswerRecordMapper,
     }
 
     @Override
-    public Integer submitAnswer(List<SgAnswerRecordAddParam>answerRecordAddParamList) {
+    public SgAnswerStatistics submitAnswer(List<SgAnswerRecordAddParam>answerRecordAddParamList) {
+        // 获取年月日
+        String yyyyMMdd = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         // 新增考试统计表
         SgAnswerRecordAddParam sgAnswerRecordAddParam = answerRecordAddParamList.get(0);
         SgAnswerStatistics sgAnswerStatistics = BeanUtil.toBean(sgAnswerRecordAddParam, SgAnswerStatistics.class);
+        sgAnswerStatistics.setName(sgAnswerRecordAddParam.getYwfl() + yyyyMMdd);
         System.out.println("JSON.toJSONString(sgAnswerStatistics) = " + JSON.toJSONString(sgAnswerStatistics));
         int insertResult = sgAnswerStatisticsMapper.insert(sgAnswerStatistics);
         if (insertResult > 0) {
@@ -146,7 +149,7 @@ public class SgAnswerRecordServiceImpl extends ServiceImpl<SgAnswerRecordMapper,
             sgAnswerStatisticsMapper.updateById(answerStatistics);
             System.out.println("用户总分：" + userTotalScore);
             System.out.println("修改后--答题统计entity：" + answerStatistics);
-            return userTotalScore;
+            return answerStatistics;
         } else {
             throw new CommonException("试卷提交失败");
         }

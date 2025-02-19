@@ -76,17 +76,17 @@ public class SgPaperServiceImpl extends ServiceImpl<SgPaperMapper, SgPaper> impl
             queryWrapper.lambda().orderByAsc(SgPaper::getSortCode);
         }
         Page<SgPaper> page = this.page(CommonPageRequest.defaultPage(), queryWrapper);
-        page.getRecords().forEach(item -> {
-            item.setQuestionCount(0);
-            sgQuestionMapper.selectList(new QueryWrapper<SgQuestion>().lambda().eq(SgQuestion::getPaperId, item.getId())).forEach(question -> {
-                item.setTotalScore(item.getTotalScore() + question.getScore());
-                item.setQuestionCount(item.getQuestionCount() + 1);
-            });
-            BizUserIdParam bizUserIdParam = new BizUserIdParam();
-            bizUserIdParam.setId(item.getCreateUser());
-            BizUser user = bizUserService.detail(bizUserIdParam);
-            item.setCreateUser(user.getName());
-        });
+//        page.getRecords().forEach(item -> {
+//            item.setQuestionCount(0);
+//            sgQuestionMapper.selectList(new QueryWrapper<SgQuestion>().lambda().eq(SgQuestion::getPaperId, item.getId())).forEach(question -> {
+//                item.setTotalScore(item.getTotalScore() + question.getScore());
+//                item.setQuestionCount(item.getQuestionCount() + 1);
+//            });
+//            BizUserIdParam bizUserIdParam = new BizUserIdParam();
+//            bizUserIdParam.setId(item.getCreateUser());
+//            BizUser user = bizUserService.detail(bizUserIdParam);
+//            item.setCreateUser(user.getName());
+//        });
         return page;
     }
 

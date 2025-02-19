@@ -25,9 +25,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vip.xiaonuo.biz.modular.dict.entity.BizDict;
+import vip.xiaonuo.biz.modular.dict.enums.BizDictCategoryEnum;
+import vip.xiaonuo.biz.modular.dict.mapper.BizDictMapper;
 import vip.xiaonuo.biz.modular.zskfl.mapper.ZskFlMapper;
 import vip.xiaonuo.biz.modular.zskfl.param.ZskFlAddParam;
 import vip.xiaonuo.biz.modular.zskfl.param.ZskFlEditParam;
@@ -51,6 +55,9 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class ZskFlServiceImpl extends ServiceImpl<ZskFlMapper, ZskFl> implements ZskFlService {
+
+    @Resource
+    private BizDictMapper bizDictMapper;
 
     @Override
     public Page<List<TreeNode<String>>> page(ZskFlPageParam zskFlPageParam) {
@@ -156,5 +163,28 @@ public class ZskFlServiceImpl extends ServiceImpl<ZskFlMapper, ZskFl> implements
         log.info("ZskFl getOneLevel is end, result is {}", JSONObject.toJSONString(list));
         return list;
 
+    }
+
+    @Override
+    public List<BizDict> getDictList(String dictType) {
+        log.info("Zsk getDictList is begin, param dictType is {}", JSONObject.toJSONString(dictType));
+        QueryWrapper<BizDict> queryWrapper = new QueryWrapper<BizDict>().checkSqlInjection();
+        queryWrapper.lambda().select(BizDict::getId, BizDict::getParentId, BizDict::getCategory, BizDict::getDictLabel,
+                BizDict::getDictValue, BizDict::getSortCode)
+                .eq(BizDict::getCategory, BizDictCategoryEnum.BIZ.getValue())
+                .eq(BizDict::getDictValue, dictType)
+                .eq(BizDict::getParentId, "0");
+        BizDict bizDict = bizDictMapper.selectOne(queryWrapper);
+        if (null == bizDict) {
+            throw new CommonException("无此业务字典，字典值为：{}", dictType);
+        }
+        QueryWrapper<BizDict> query = new QueryWrapper<BizDict>().checkSqlInjection();
+        query.lambda().select(BizDict::getId, BizDict::getParentId, BizDict::getCategory, BizDict::getDictLabel,
+                BizDict::getDictValue, BizDict::getSortCode)
+                .eq(BizDict::getParentId, bizDict.getId())
+                .eq(BizDict::getCategory, BizDictCategoryEnum.BIZ.getValue());
+        List<BizDict> bizDictList = bizDictMapper.selectList(query);
+        log.info("Zsk getDictList is end, result is {}", JSONObject.toJSONString(bizDictList));
+        return bizDictList;
     }
 }

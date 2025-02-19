@@ -35,13 +35,9 @@ public class SgAnswerStatistics {
     @Schema(description = "答题统计ID")
     private String id;
 
-    /** 试卷ID */
-    @Schema(description = "试卷ID")
-    private String paperId;
-
-    /** 试卷名称 */
-    @Schema(description = "试卷名称")
-    private String paperName;
+    /** 答题统计名称(业务名称+年月日) */
+    @Schema(description = "答题统计名称")
+    private String name;
 
     /** 用户ID */
     @Schema(description = "用户ID")
