@@ -113,11 +113,11 @@ public class SgAnswerRecordServiceImpl extends ServiceImpl<SgAnswerRecordMapper,
     @Override
     public SgAnswerStatistics submitAnswer(List<SgAnswerRecordAddParam>answerRecordAddParamList) {
         // 获取年月日
-        String yyyyMMdd = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         // 新增考试统计表
         SgAnswerRecordAddParam sgAnswerRecordAddParam = answerRecordAddParamList.get(0);
         SgAnswerStatistics sgAnswerStatistics = BeanUtil.toBean(sgAnswerRecordAddParam, SgAnswerStatistics.class);
-        sgAnswerStatistics.setName(sgAnswerRecordAddParam.getYwfl() + yyyyMMdd);
+        sgAnswerStatistics.setName(sgAnswerRecordAddParam.getYwfl() + "-" + date);
         System.out.println("JSON.toJSONString(sgAnswerStatistics) = " + JSON.toJSONString(sgAnswerStatistics));
         int insertResult = sgAnswerStatisticsMapper.insert(sgAnswerStatistics);
         if (insertResult > 0) {
