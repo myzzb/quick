@@ -48,6 +48,10 @@ public class SgsjLcPageParam {
     @Schema(description = "关键词")
     private String searchKey;
 
+    /** 事故数据ID */
+    @Schema(description = "事故数据ID")
+    private String sgId;
+
     /** 事故数据名称 */
     @Schema(description = "事故数据名称")
     private String sgmc;

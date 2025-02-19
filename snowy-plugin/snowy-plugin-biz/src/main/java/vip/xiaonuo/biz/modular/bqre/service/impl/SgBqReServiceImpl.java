@@ -16,11 +16,20 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollStreamUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vip.xiaonuo.biz.modular.bq.entity.SgBq;
+import vip.xiaonuo.biz.modular.bq.mapper.SgBqMapper;
+import vip.xiaonuo.biz.modular.bq.vo.SgBqVO;
+import vip.xiaonuo.biz.modular.bqre.vo.SgBqReVO;
+import vip.xiaonuo.biz.modular.sgsj.param.SgsjIdParam;
 import vip.xiaonuo.common.enums.CommonSortOrderEnum;
 import vip.xiaonuo.common.exception.CommonException;
 import vip.xiaonuo.common.page.CommonPageRequest;
@@ -32,6 +41,7 @@ import vip.xiaonuo.biz.modular.bqre.param.SgBqReIdParam;
 import vip.xiaonuo.biz.modular.bqre.param.SgBqRePageParam;
 import vip.xiaonuo.biz.modular.bqre.service.SgBqReService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,9 +50,12 @@ import java.util.List;
  * @author zzb
  * @date  2025/02/12 15:01
  **/
+@Slf4j
 @Service
 public class SgBqReServiceImpl extends ServiceImpl<SgBqReMapper, SgBqRe> implements SgBqReService {
 
+    @Resource
+    private SgBqMapper sgBqMapper;
     @Override
     public Page<SgBqRe> page(SgBqRePageParam sgBqRePageParam) {
         QueryWrapper<SgBqRe> queryWrapper = new QueryWrapper<SgBqRe>().checkSqlInjection();
@@ -96,5 +109,35 @@ public class SgBqReServiceImpl extends ServiceImpl<SgBqReMapper, SgBqRe> impleme
             throw new CommonException("事故标签关联不存在，id值为：{}", id);
         }
         return sgBqRe;
+    }
+
+    @Override
+    public List<SgBqVO> getBqReVOBySgId(SgsjIdParam sgsjIdParam) {
+        log.info("SgBqReVO getBqReVOBySgId is begin, param sgsjIdParam is {}", JSONObject.toJSONString(sgsjIdParam));
+        // 1.先获取到所有的标签
+        List<SgBq> sgBqList = sgBqMapper.selectList(new QueryWrapper<SgBq>().checkSqlInjection().lambda().eq(SgBq::getDeleteFlag, false));
+
+        // 2.获取到此事故所有的关联关系
+        List<SgBqRe> sgBqReList = new ArrayList<>();
+        if (ObjectUtil.isNotEmpty(sgsjIdParam.getSgId())) {
+            sgBqReList = this.list(new QueryWrapper<SgBqRe>().checkSqlInjection().lambda().eq(SgBqRe::getDeleteFlag, false)
+                    .eq(SgBqRe::getSgId, sgsjIdParam.getSgId()));
+        }
+        // 3.将标签和关联关系进行关联
+        List<SgBqVO> list = new ArrayList<>();
+        for (SgBq sgBq : sgBqList) {
+            SgBqVO sgBqVO = new SgBqVO();
+            BeanUtil.copyProperties(sgBq, sgBqVO);
+            for (SgBqRe sgBqRe : sgBqReList) {
+                if (sgBqRe.getBqId().equals(sgBq.getBqId())) {
+                    sgBqVO.setChecked(true);
+                    sgBqVO.setSgId(sgBqRe.getSgId());
+                    break;
+                }
+            }
+            list.add(sgBqVO);
+        }
+        log.info("SgBqReVO getBqReVOBySgId is end, result is {}", JSONObject.toJSONString(list));
+        return list;
     }
 }
