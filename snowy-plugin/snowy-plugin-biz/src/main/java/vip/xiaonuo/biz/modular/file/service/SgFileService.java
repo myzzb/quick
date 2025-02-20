@@ -21,6 +21,7 @@ import vip.xiaonuo.biz.modular.file.param.SgFileAddParam;
 import vip.xiaonuo.biz.modular.file.param.SgFileEditParam;
 import vip.xiaonuo.biz.modular.file.param.SgFileIdParam;
 import vip.xiaonuo.biz.modular.file.param.SgFilePageParam;
+import vip.xiaonuo.biz.modular.file.param.SgFileSaveParam;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,6 +35,13 @@ import java.util.List;
 public interface SgFileService extends IService<SgFile> {
 
 
+    /**
+    * @description MultipartFile文件上传，返回文件id
+    * @return java.lang.String
+    * @author zzb
+    * @date 2025/2/20 17:33
+    **/
+    String uploadReturnId(String engine, MultipartFile file);
     void download(SgFileIdParam sgFileIdParam, HttpServletResponse response) throws IOException;
     /**
     * @description MultipartFile文件上传，返回文件Url
@@ -60,6 +68,13 @@ public interface SgFileService extends IService<SgFile> {
      */
     void add(SgFileAddParam sgFileAddParam);
 
+    /**
+    * @description 保存文件资源
+    * @param sgFileSaveParam
+    * @author zzb
+    * @date 2025/2/20 17:43
+    **/
+    void save(SgFileSaveParam sgFileSaveParam);
     /**
      * 编辑文件资源
      *

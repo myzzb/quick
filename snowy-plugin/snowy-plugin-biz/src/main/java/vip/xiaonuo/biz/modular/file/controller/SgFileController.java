@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import vip.xiaonuo.biz.modular.file.enums.SgFileEngineTypeEnum;
+import vip.xiaonuo.biz.modular.file.param.SgFileSaveParam;
 import vip.xiaonuo.common.annotation.CommonLog;
 import vip.xiaonuo.common.pojo.CommonResult;
 import vip.xiaonuo.biz.modular.file.entity.SgFile;
@@ -69,6 +70,21 @@ public class SgFileController {
     })
     public CommonResult<String> uploadLocalReturnUrl(@RequestPart("file") MultipartFile file, String fileTypeId) {
         return CommonResult.data(sgFileService.uploadReturnUrl(SgFileEngineTypeEnum.LOCAL.getValue(), file, fileTypeId));
+    }
+
+    @Operation(summary = "上传本地文件返回id")
+    @CommonLog("上传本地文件返回id")
+    @PostMapping("/biz/file/uploadLocalReturnId")
+    public CommonResult<String> uploadLocalReturnId(@RequestPart("file") MultipartFile file) {
+        return CommonResult.data(sgFileService.uploadReturnId(SgFileEngineTypeEnum.LOCAL.getValue(), file));
+    }
+
+    @Operation(summary = "保存文件资源")
+    @CommonLog("保存文件资源")
+    @PostMapping("/biz/file/save")
+    public CommonResult<String> save(@RequestBody @Valid SgFileSaveParam sgFileSaveParam) {
+        sgFileService.save(sgFileSaveParam);
+        return CommonResult.ok();
     }
 
     @Operation(summary = "下载文件")

@@ -34,6 +34,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import vip.xiaonuo.biz.modular.file.enums.SgFileEngineTypeEnum;
+import vip.xiaonuo.biz.modular.file.param.SgFileSaveParam;
 import vip.xiaonuo.biz.modular.file.util.SgFileLocalUtil;
 import vip.xiaonuo.biz.modular.filetype.entity.FileType;
 import vip.xiaonuo.biz.modular.filetype.mapper.FileTypeMapper;
@@ -75,6 +76,11 @@ public class SgFileServiceImpl extends ServiceImpl<SgFileMapper, SgFile> impleme
     private FileTypeMapper fileTypeMapper;
 
     @Override
+    public String uploadReturnId(String engine, MultipartFile file) {
+        return this.storageFile(engine, file, true);
+    }
+
+    @Override
     public void download(SgFileIdParam sgFileIdParam, HttpServletResponse response) throws IOException {
         log.info("download is begin, param is {}", JSONObject.toJSONString(sgFileIdParam));
         SgFile sgFile;
@@ -99,7 +105,7 @@ public class SgFileServiceImpl extends ServiceImpl<SgFileMapper, SgFile> impleme
 
     @Override
     public String uploadReturnUrl(String engine, MultipartFile file, String fileTypeId) {
-        return this.storageFile(engine, file, false,fileTypeId);
+        return this.storageFile(engine, file, false);
     }
 
 
@@ -112,7 +118,7 @@ public class SgFileServiceImpl extends ServiceImpl<SgFileMapper, SgFile> impleme
     * @author zzb
     * @date 2025/1/20 18:23
     **/
-    private String storageFile(String engine, MultipartFile file, boolean returnFileId, String fileTypeId) {
+    private String storageFile(String engine, MultipartFile file, boolean returnFileId) {
 
         // 如果引擎为空，默认使用本地
         if(ObjectUtil.isEmpty(engine)) {
@@ -159,7 +165,7 @@ public class SgFileServiceImpl extends ServiceImpl<SgFileMapper, SgFile> impleme
         // 设置文件id
         sgFile.setId(fileId);
         // 文件类型
-        sgFile.setFileTypeId(fileTypeId);
+        //sgFile.setFileTypeId(fileTypeId);
 
         // 设置存储引擎类型
         sgFile.setEngine(engine);
@@ -285,6 +291,15 @@ public class SgFileServiceImpl extends ServiceImpl<SgFileMapper, SgFile> impleme
     public void add(SgFileAddParam sgFileAddParam) {
         SgFile sgFile = BeanUtil.toBean(sgFileAddParam, SgFile.class);
         this.save(sgFile);
+    }
+
+    @Override
+    public void save(SgFileSaveParam sgFileSaveParam) {
+        log.info("SgFile save is begin, param is {}", JSONObject.toJSONString(sgFileSaveParam));
+        SgFile sgFile = this.queryEntity(sgFileSaveParam.getId());
+        BeanUtil.copyProperties(sgFileSaveParam, sgFile);
+        this.updateById(sgFile);
+        log.info("SgFile save is end, result is nothing");
     }
 
     @Transactional(rollbackFor = Exception.class)

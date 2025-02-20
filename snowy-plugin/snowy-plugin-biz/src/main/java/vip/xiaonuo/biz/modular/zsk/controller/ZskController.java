@@ -28,9 +28,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import vip.xiaonuo.biz.modular.file.enums.SgFileEngineTypeEnum;
 import vip.xiaonuo.biz.modular.zsk.entity.Zsk;
 import vip.xiaonuo.biz.modular.zsk.param.ZskAddParam;
 import vip.xiaonuo.biz.modular.zsk.param.ZskIdParam;
+import vip.xiaonuo.biz.modular.zsk.param.ZskSaveParam;
 import vip.xiaonuo.common.annotation.CommonLog;
 import vip.xiaonuo.common.pojo.CommonResult;
 import vip.xiaonuo.biz.modular.zsk.enums.ZskFileEngineTypeEnum;
@@ -76,6 +78,20 @@ public class ZskController {
     })
     public CommonResult<String> uploadLocalReturnUrl(@RequestPart("file") MultipartFile file, String fileTypeId) {
         return CommonResult.data(zskService.uploadReturnUrl(ZskFileEngineTypeEnum.LOCAL.getValue(), file, fileTypeId));
+    }
+    @Operation(summary = "上传本地文件返回id")
+    @CommonLog("上传本地文件返回id")
+    @PostMapping("/biz/zsk/uploadLocalReturnId")
+    public CommonResult<String> uploadLocalReturnId(@RequestPart("file") MultipartFile file) {
+        return CommonResult.data(zskService.uploadReturnId(SgFileEngineTypeEnum.LOCAL.getValue(), file));
+    }
+
+    @Operation(summary = "保存知识库")
+    @CommonLog("添加知识库")
+    @PostMapping("/biz/zsk/save")
+    public CommonResult<String> save(@RequestBody @Valid ZskSaveParam zskAddParam) {
+        zskService.save(zskAddParam);
+        return CommonResult.ok();
     }
     /**
      * 获取知识库管理分页

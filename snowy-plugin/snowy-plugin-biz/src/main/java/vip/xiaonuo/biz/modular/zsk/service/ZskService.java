@@ -21,6 +21,7 @@ import vip.xiaonuo.biz.modular.zsk.param.ZskAddParam;
 import vip.xiaonuo.biz.modular.zsk.param.ZskEditParam;
 import vip.xiaonuo.biz.modular.zsk.param.ZskIdParam;
 import vip.xiaonuo.biz.modular.zsk.param.ZskPageParam;
+import vip.xiaonuo.biz.modular.zsk.param.ZskSaveParam;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,6 +34,13 @@ import java.util.List;
  **/
 public interface ZskService extends IService<Zsk> {
 
+    /**
+    * @description MultipartFile文件上传，返回文件id
+    * @return java.lang.String
+    * @author zzb
+    * @date 2025/2/20 17:59
+    **/
+    String uploadReturnId(String engine, MultipartFile file);
     void download(ZskIdParam zskIdParam, HttpServletResponse response) throws IOException;
     /**
     * @description 知识库文件上传
@@ -57,6 +65,7 @@ public interface ZskService extends IService<Zsk> {
      */
     void add(ZskAddParam zskAddParam);
 
+    void save(ZskSaveParam zskAddParam);
     /**
      * 编辑知识库管理
      *

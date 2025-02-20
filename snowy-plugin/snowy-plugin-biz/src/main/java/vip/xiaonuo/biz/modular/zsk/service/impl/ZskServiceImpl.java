@@ -33,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import vip.xiaonuo.biz.modular.zsk.param.ZskSaveParam;
 import vip.xiaonuo.common.enums.CommonSortOrderEnum;
 import vip.xiaonuo.common.exception.CommonException;
 import vip.xiaonuo.common.page.CommonPageRequest;
@@ -78,6 +79,11 @@ public class ZskServiceImpl extends ServiceImpl<ZskMapper, Zsk> implements ZskSe
     private ZskFlMapper zskFlMapper;
 
     @Override
+    public String uploadReturnId(String engine, MultipartFile file) {
+        return this.storageFile(engine, file, true);
+    }
+
+    @Override
     public void download(ZskIdParam zskIdParam, HttpServletResponse response) throws IOException {
         log.info("download is begin, param is {}", JSONObject.toJSONString(zskIdParam));
         Zsk zsk;
@@ -102,10 +108,10 @@ public class ZskServiceImpl extends ServiceImpl<ZskMapper, Zsk> implements ZskSe
 
     @Override
     public String uploadReturnUrl(String engine, MultipartFile file, String ZskFlId) {
-        return this.storageFile(engine, file, false,ZskFlId);
+        return this.storageFile(engine, file, false);
     }
 
-    private String storageFile(String engine, MultipartFile file, boolean returnFileId, String ZskFlId) {
+    private String storageFile(String engine, MultipartFile file, boolean returnFileId) {
 
         // 如果引擎为空，默认使用本地
         if(ObjectUtil.isEmpty(engine)) {
@@ -152,7 +158,7 @@ public class ZskServiceImpl extends ServiceImpl<ZskMapper, Zsk> implements ZskSe
         // 设置文件id
         zsk.setZskId(fileId);
         // 文件类型
-        zsk.setZskFlId(ZskFlId);
+        //zsk.setZskFlId(ZskFlId);
 
         // 重新定义文件类型
         String type = FileClassifier.classifyFile(file.getOriginalFilename());
@@ -285,6 +291,15 @@ public class ZskServiceImpl extends ServiceImpl<ZskMapper, Zsk> implements ZskSe
     public void add(ZskAddParam zskAddParam) {
         Zsk zsk = BeanUtil.toBean(zskAddParam, Zsk.class);
         this.save(zsk);
+    }
+
+    @Override
+    public void save(ZskSaveParam zskAddParam) {
+        log.info("Zsk save is begin, param is {}", JSONObject.toJSONString(zskAddParam));
+        Zsk zsk = this.queryEntity(zskAddParam.getZskId());
+        BeanUtil.copyProperties(zskAddParam, zsk);
+        this.updateById(zsk);
+        log.info("Zsk save is end, result is nothing");
     }
 
     @Transactional(rollbackFor = Exception.class)
