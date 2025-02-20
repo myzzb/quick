@@ -134,6 +134,9 @@ public class GlobalConfigure implements WebMvcConfigurer {
             /* 系统字典树 */
             "/dev/dict/tree",
 
+            /* 文件上传 */
+            "/dev/file/uploadLocalReturnUrl",
+
             /* 文件下载 */
             "/dev/file/download",
             /* sg文件下载 */

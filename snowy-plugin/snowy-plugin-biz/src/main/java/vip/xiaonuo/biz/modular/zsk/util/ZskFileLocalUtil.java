@@ -223,13 +223,6 @@ public class ZskFileLocalUtil {
              bucketPath = Paths.get(uploadFileFolder, bucketName);
         }
 
-
-
-        // if(!FileUtil.exist(getUploadFileFolder() + FileUtil.FILE_SEPARATOR + bucketName)) {
-        //     System.out.println("++++++++++ 创建文件夹"+getUploadFileFolder() + FileUtil.FILE_SEPARATOR + bucketName);
-        //     FileUtil.mkdir(getUploadFileFolder() + FileUtil.FILE_SEPARATOR + bucketName);
-        // }
-
         // FileUtil.writeFromStream(inputStream, getUploadFileFolder() + FileUtil.FILE_SEPARATOR + bucketName + FileUtil.FILE_SEPARATOR + key);
         // 确保目录存在
         if (!Files.exists(bucketPath)) {
