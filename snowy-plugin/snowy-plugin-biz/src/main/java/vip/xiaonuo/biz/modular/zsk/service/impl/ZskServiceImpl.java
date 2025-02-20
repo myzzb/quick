@@ -150,7 +150,7 @@ public class ZskServiceImpl extends ServiceImpl<ZskMapper, Zsk> implements ZskSe
         Zsk zsk = new Zsk();
 
         // 设置文件id
-        zsk.setZskFlId(fileId);
+        zsk.setZskId(fileId);
         // 文件类型
         zsk.setZskFlId(ZskFlId);
 
@@ -195,7 +195,7 @@ public class ZskServiceImpl extends ServiceImpl<ZskMapper, Zsk> implements ZskSe
             if(ObjectUtil.isEmpty(apiUrl)) {
                 throw new CommonException("后端域名地址未正确配置：snowy.config.common.backend-url为空");
             }
-            downloadUrl= apiUrl + "/sys/zsk/download?id=" + fileId;
+            downloadUrl= apiUrl + "/biz/zsk/download?zskId=" + fileId;
             zsk.setDownloadPath(downloadUrl);
         } else {
             // 阿里云、腾讯云、MINIO可以直接使用存储地址（公网）作为下载地址
