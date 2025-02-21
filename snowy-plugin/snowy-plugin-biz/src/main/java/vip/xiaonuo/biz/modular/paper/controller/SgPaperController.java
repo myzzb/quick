@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import vip.xiaonuo.biz.modular.paperquestion.param.SgPaperQuestionAddParam;
 import vip.xiaonuo.biz.modular.question.entity.SgQuestion;
 import vip.xiaonuo.biz.modular.question.service.SgQuestionService;
 import vip.xiaonuo.common.annotation.CommonLog;
@@ -141,5 +142,15 @@ public class SgPaperController {
     @GetMapping("/biz/paper/questions")
     public CommonResult<List<SgQuestion>> question(@Valid SgPaperIdParam sgPaperIdParam) {
         return CommonResult.data(sgQuestionService.question(sgPaperIdParam));
+    }
+
+    //addQuestions
+    @Operation(summary = "添加试题")
+    @CommonLog("作业管理-添加试题")
+    @SaCheckPermission("/biz/paper/addQuestions")
+    @PostMapping("/biz/paper/addQuestions")
+    public CommonResult<String> addQuestions(@RequestBody @Valid List<SgPaperQuestionAddParam> sgPaperQuestionAddParams) {
+        sgPaperService.addQuestions(sgPaperQuestionAddParams);
+        return CommonResult.ok();
     }
 }

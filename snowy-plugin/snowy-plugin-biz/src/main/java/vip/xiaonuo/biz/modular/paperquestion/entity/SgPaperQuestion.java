@@ -10,64 +10,42 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package vip.xiaonuo.biz.modular.paper.entity;
+package vip.xiaonuo.biz.modular.paperquestion.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import vip.xiaonuo.common.pojo.CommonEntity;
-import com.fhs.core.trans.anno.Trans;
-import com.fhs.core.trans.constant.TransType;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 试卷表实体
+ * 试卷试题关系表实体
  *
  * @author byc
- * @date  2025/02/07 15:58
+ * @date  2025/02/21 11:35
  **/
 @Getter
 @Setter
-@TableName(value = "sg_paper", autoResultMap = true)
-public class SgPaper extends CommonEntity {
+@TableName(value = "sg_paper_question", autoResultMap = true)
+public class SgPaperQuestion extends CommonEntity {
 
-    /** 试卷ID(主键) */
+    /** 关联ID */
     @TableId
-    @Schema(description = "试卷ID(主键)")
+    @Schema(description = "关联ID")
     private String id;
 
-    /** 业务分类 */
-    @Schema(description = "业务分类(业务教学)")
-    private String ywfl;
+    /** 试卷ID */
+    @Schema(description = "试卷ID")
+    private String paperId;
 
-    /** 试卷名称 */
-    @Schema(description = "试卷名称")
-    private String name;
-
-    /** 试卷状态：已启用；未启用 */
-    @Schema(description = "试卷状态：已启用；未启用")
-    private String status;
-
-    /** 试题数量 */
-    @Schema(description = "试题数量")
-    private Integer questionCount;
-
-    /** 试卷总分 */
-    @Schema(description = "试卷总分")
-    private Integer totalScore;
+    /** 试题ID */
+    @Schema(description = "试题ID")
+    private String questionId;
 
     /** 排序 */
     @Schema(description = "排序")
     private Integer sortCode;
-
-    /** 备注 */
-    @Schema(description = "备注")
-    private String remark;
-
-    /** 扩展信息 */
-    @Schema(description = "扩展信息")
-    private String extJson;
 }

@@ -19,6 +19,7 @@ import vip.xiaonuo.biz.modular.paper.param.SgPaperAddParam;
 import vip.xiaonuo.biz.modular.paper.param.SgPaperEditParam;
 import vip.xiaonuo.biz.modular.paper.param.SgPaperIdParam;
 import vip.xiaonuo.biz.modular.paper.param.SgPaperPageParam;
+import vip.xiaonuo.biz.modular.paperquestion.param.SgPaperQuestionAddParam;
 
 import java.util.List;
 
@@ -84,4 +85,10 @@ public interface SgPaperService extends IService<SgPaper> {
      * @date  2025/02/07 15:58
      **/
     SgPaper queryEntity(String id);
+
+    /**
+     * 添加试题
+     * @param sgPaperQuestionAddParams 试题列表
+     */
+    void addQuestions(List<SgPaperQuestionAddParam> sgPaperQuestionAddParams);
 }

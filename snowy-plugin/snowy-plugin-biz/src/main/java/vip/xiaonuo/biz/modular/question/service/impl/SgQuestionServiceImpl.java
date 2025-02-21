@@ -25,6 +25,8 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vip.xiaonuo.biz.modular.paper.param.SgPaperIdParam;
+import vip.xiaonuo.biz.modular.paperquestion.entity.SgPaperQuestion;
+import vip.xiaonuo.biz.modular.paperquestion.mapper.SgPaperQuestionMapper;
 import vip.xiaonuo.common.enums.CommonSortOrderEnum;
 import vip.xiaonuo.common.exception.CommonException;
 import vip.xiaonuo.common.page.CommonPageRequest;
@@ -36,6 +38,7 @@ import vip.xiaonuo.biz.modular.question.param.SgQuestionIdParam;
 import vip.xiaonuo.biz.modular.question.param.SgQuestionPageParam;
 import vip.xiaonuo.biz.modular.question.service.SgQuestionService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +49,9 @@ import java.util.List;
  **/
 @Service
 public class SgQuestionServiceImpl extends ServiceImpl<SgQuestionMapper, SgQuestion> implements SgQuestionService {
+
+    @Resource
+    private SgPaperQuestionMapper sgPaperQuestionMapper;
 
     @Override
     public Page<SgQuestion> page(SgQuestionPageParam sgQuestionPageParam) {
@@ -110,12 +116,18 @@ public class SgQuestionServiceImpl extends ServiceImpl<SgQuestionMapper, SgQuest
 
     @Override
     public List<SgQuestion> question(SgPaperIdParam sgPaperIdParam) {
-//        if(ObjectUtil.isEmpty(sgPaperIdParam.getId())) {
-//            throw new CommonException("请检查参数是否正确");
-//        }
-//        LambdaQueryWrapper<SgQuestion> lambdaQueryWrapper = new QueryWrapper<SgQuestion>().checkSqlInjection().lambda().eq(SgQuestion::getPaperId, sgPaperIdParam.getId()).orderByAsc(SgQuestion::getSortCode);
-//        return this.list(lambdaQueryWrapper);
-        return null;
+        if(ObjectUtil.isEmpty(sgPaperIdParam.getId())) {
+            throw new CommonException("请检查参数是否正确");
+        }
+        LambdaQueryWrapper<SgPaperQuestion> lambdaQueryWrapper = new QueryWrapper<SgPaperQuestion>().checkSqlInjection().lambda().eq(SgPaperQuestion::getPaperId, sgPaperIdParam.getId()).orderByAsc(SgPaperQuestion::getSortCode);
+
+        List<SgPaperQuestion> questionList = sgPaperQuestionMapper.selectList(lambdaQueryWrapper);
+        List<SgQuestion> resultList = new ArrayList<>();
+        for (SgPaperQuestion paperQuestion : questionList) {
+            SgQuestion sgQuestion = this.queryEntity(paperQuestion.getQuestionId());
+            resultList.add(sgQuestion);
+        }
+        return resultList;
     }
 
 

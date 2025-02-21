@@ -10,7 +10,7 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package vip.xiaonuo.biz.modular.aljx.param;
+package vip.xiaonuo.biz.modular.paperquestion.param;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -19,14 +19,14 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 案例教学查询参数
+ * 试卷试题关系表查询参数
  *
  * @author byc
- * @date  2025/01/09 17:49
+ * @date  2025/02/21 11:35
  **/
 @Getter
 @Setter
-public class SgAljxPageParam {
+public class SgPaperQuestionPageParam {
 
     /** 当前页 */
     @Schema(description = "当前页码")
@@ -47,33 +47,5 @@ public class SgAljxPageParam {
     /** 关键词 */
     @Schema(description = "关键词")
     private String searchKey;
-
-    /** 事故类型(例：火灾、地震、洪涝) */
-    @Schema(description = "事故类型(例：火灾、地震、洪涝)")
-    private String sglx;
-
-    /** 事故分类(例：地方事故) */
-    @Schema(description = "事故分类(例：地方事故)")
-    private String sgfl;
-
-    /** 事故等级 */
-    @Schema(description = "事故等级")
-    private String sgdj;
-
-//    /** 事故发生时间开始 */
-//    @Schema(description = "事故发生时间开始")
-//    private String startSgfssj;
-//
-//    /** 事故发生时间结束 */
-//    @Schema(description = "事故发生时间结束")
-//    private String endSgfssj;
-//
-//    /** 创建时间开始 */
-//    @Schema(description = "创建时间开始")
-//    private String startCreateTime;
-//
-//    /** 创建时间结束 */
-//    @Schema(description = "创建时间结束")
-//    private String endCreateTime;
 
 }

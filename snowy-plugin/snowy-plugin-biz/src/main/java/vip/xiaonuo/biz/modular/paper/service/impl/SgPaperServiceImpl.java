@@ -21,10 +21,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vip.xiaonuo.biz.modular.paperquestion.param.SgPaperQuestionAddParam;
+import vip.xiaonuo.biz.modular.paperquestion.service.SgPaperQuestionService;
 import vip.xiaonuo.biz.modular.question.entity.SgQuestion;
 import vip.xiaonuo.biz.modular.question.mapper.SgQuestionMapper;
+import vip.xiaonuo.biz.modular.question.service.SgQuestionService;
 import vip.xiaonuo.biz.modular.user.entity.BizUser;
 import vip.xiaonuo.biz.modular.user.param.BizUserIdParam;
 import vip.xiaonuo.biz.modular.user.service.BizUserService;
@@ -51,10 +55,13 @@ import java.util.List;
 public class SgPaperServiceImpl extends ServiceImpl<SgPaperMapper, SgPaper> implements SgPaperService {
 
     @Resource
-    private SgQuestionMapper sgQuestionMapper;
+    private SgQuestionService sgQuestionService;
 
     @Resource
     private BizUserService bizUserService;
+
+    @Resource
+    private SgPaperQuestionService sgPaperQuestionService;
 
     @Override
     public Page<SgPaper> page(SgPaperPageParam sgPaperPageParam) {
@@ -76,17 +83,12 @@ public class SgPaperServiceImpl extends ServiceImpl<SgPaperMapper, SgPaper> impl
             queryWrapper.lambda().orderByAsc(SgPaper::getSortCode);
         }
         Page<SgPaper> page = this.page(CommonPageRequest.defaultPage(), queryWrapper);
-//        page.getRecords().forEach(item -> {
-//            item.setQuestionCount(0);
-//            sgQuestionMapper.selectList(new QueryWrapper<SgQuestion>().lambda().eq(SgQuestion::getPaperId, item.getId())).forEach(question -> {
-//                item.setTotalScore(item.getTotalScore() + question.getScore());
-//                item.setQuestionCount(item.getQuestionCount() + 1);
-//            });
-//            BizUserIdParam bizUserIdParam = new BizUserIdParam();
-//            bizUserIdParam.setId(item.getCreateUser());
-//            BizUser user = bizUserService.detail(bizUserIdParam);
-//            item.setCreateUser(user.getName());
-//        });
+        page.getRecords().forEach(item -> {
+            SgPaperIdParam sgPaperIdParam = BeanUtil.toBean(item, SgPaperIdParam.class);
+            List<SgQuestion> questionList = sgQuestionService.question(sgPaperIdParam);
+            item.setQuestionCount(questionList.size());
+            item.setTotalScore(questionList.stream().mapToInt(SgQuestion::getScore).sum());
+        });
         return page;
     }
 
@@ -129,5 +131,16 @@ public class SgPaperServiceImpl extends ServiceImpl<SgPaperMapper, SgPaper> impl
             throw new CommonException("试卷表不存在，id值为：{}", id);
         }
         return sgPaper;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void addQuestions(List<SgPaperQuestionAddParam> sgPaperQuestionAddParams) {
+        if (sgPaperQuestionAddParams.size() == 0) {
+            throw new CommonException("请检查参数是否正确");
+        }
+        for (SgPaperQuestionAddParam questionAddParam : sgPaperQuestionAddParams) {
+            sgPaperQuestionService.add(questionAddParam);
+        }
     }
 }
