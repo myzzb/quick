@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.zzb</groupId>
+        <artifactId>quick-plugin</artifactId>
+        <version>3.0.0</version>
+    </parent>
+
+    <artifactId>quick-plugin-biz</artifactId>
+    <packaging>jar</packaging>
+    <description>业务功能插件</description>
+
+    <dependencies>
+        <!-- 每个插件都要引入自己的对外接口 -->
+        <dependency>
+            <groupId>com.zzb</groupId>
+            <artifactId>quick-plugin-biz-api</artifactId>
+        </dependency>
+
+        <!-- 引入登录鉴权接口，用于获取登录用户 -->
+        <dependency>
+            <groupId>com.zzb</groupId>
+            <artifactId>quick-plugin-auth-api</artifactId>
+        </dependency>
+
+        <!-- 引入系统接口，用于授权角色等功能 -->
+        <dependency>
+            <groupId>com.zzb</groupId>
+            <artifactId>quick-plugin-sys-api</artifactId>
+        </dependency>
+
+        <!-- 引入开发工具接口，用于配置信息 -->
+        <dependency>
+            <groupId>com.zzb</groupId>
+            <artifactId>quick-plugin-dev-api</artifactId>
+        </dependency>
+
+        <!--引入Knife4j的官方start包,该指南选择Spring Boot版本<3.0,开发者需要注意-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>2.0.9</version>
+        </dependency>
+        <!-- Stanford NLP start -->
+            <dependency>
+                <groupId>edu.stanford.nlp</groupId>
+                <artifactId>stanford-corenlp</artifactId>
+                <version>4.5.8</version> <!-- 请使用最新版本 -->
+            </dependency>
+            <dependency>
+                <groupId>edu.stanford.nlp</groupId>
+                <artifactId>stanford-corenlp</artifactId>
+                <version>4.5.8</version>
+                <classifier>models</classifier>
+            </dependency>
+        <!-- Stanford NLP end -->
+    </dependencies>
+</project>
