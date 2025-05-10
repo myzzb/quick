@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>vip.xiaonuo</groupId>
-    <artifactId>snowy</artifactId>
-    <name>snowy</name>
+    <groupId>com.zzb</groupId>
+    <artifactId>quick</artifactId>
+    <name>quick</name>
     <version>3.0.0</version>
-    <description>snowy快速开发平台</description>
+    <description>quick快速开发平台</description>
     <packaging>pom</packaging>
 
     <parent>
@@ -18,7 +18,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <snowy.version>3.0.0</snowy.version>
+        <quick.version>3.0.0</quick.version>
         <spring-boot.version>3.2.1</spring-boot.version>
         <spring-framework.version>6.1.2</spring-framework.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -27,131 +27,131 @@
 
     <modules>
         <!-- 基础通用规则模块 -->
-        <module>snowy-common</module>
+        <module>quick-common</module>
 
         <!-- 插件模块 -->
-        <module>snowy-plugin</module>
+        <module>quick-plugin</module>
 
         <!-- 插件API接口模块 -->
-        <module>snowy-plugin-api</module>
+        <module>quick-plugin-api</module>
 
         <!-- 主启动模块 -->
-        <module>snowy-web-app</module>
+        <module>quick-web-app</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
 
-            <!-- snowy-common -->
+            <!-- quick-common -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-common</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-common</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-auth-api -->
+            <!-- quick-plugin-auth-api -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-auth-api</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-auth-api</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-biz-api -->
+            <!-- quick-plugin-biz-api -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-biz-api</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-biz-api</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-client-api -->
+            <!-- quick-plugin-client-api -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-client-api</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-client-api</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-dev-api -->
+            <!-- quick-plugin-dev-api -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-dev-api</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-dev-api</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-gen-api -->
+            <!-- quick-plugin-gen-api -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-gen-api</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-gen-api</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-mobile-api -->
+            <!-- quick-plugin-mobile-api -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-mobile-api</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-mobile-api</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-sys-api -->
+            <!-- quick-plugin-sys-api -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-sys-api</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-sys-api</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-auth -->
+            <!-- quick-plugin-auth -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-auth</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-auth</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-biz -->
+            <!-- quick-plugin-biz -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-biz</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-biz</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-sg -->
+            <!-- quick-plugin-sg -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-sg</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-sg</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-client -->
+            <!-- quick-plugin-client -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-client</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-client</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-dev -->
+            <!-- quick-plugin-dev -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-dev</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-dev</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-gen -->
+            <!-- quick-plugin-gen -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-gen</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-gen</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-mobile -->
+            <!-- quick-plugin-mobile -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-mobile</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-mobile</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
-            <!-- snowy-plugin-sys -->
+            <!-- quick-plugin-sys -->
             <dependency>
-                <groupId>vip.xiaonuo</groupId>
-                <artifactId>snowy-plugin-sys</artifactId>
-                <version>${snowy.version}</version>
+                <groupId>com.zzb</groupId>
+                <artifactId>quick-plugin-sys</artifactId>
+                <version>${quick.version}</version>
             </dependency>
 
             <!-- nashorn-core -->
@@ -230,7 +230,6 @@
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>4.5.0</version>
             </dependency>
-
             <!-- easy-poi -->
             <dependency>
                 <groupId>cn.afterturn</groupId>
